@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.20" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.6.20" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocsVision.Monitoring.DataModel.Framework\DocsVision.Monitoring.DataModel.Framework.csproj" />
+    <ProjectReference Include="..\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj" />
+    <ProjectReference Include="..\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj" />
+    <ProjectReference Include="..\DocsVision.Monitoring.Services\DocsVision.Monitoring.Services.csproj" />
+  </ItemGroup>
+
+</Project>
