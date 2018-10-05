@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 
 using Hangfire;
@@ -28,7 +29,7 @@ namespace DocsVision.Monitoring.Middleware
 			_dashboardOptions = dashboardOptions;
 		}
 
-		public Task InvokeAsync(HttpContext httpContext)
+		public async Task InvokeAsync(HttpContext httpContext)
 		{
 			var dashboardContext = new AspNetCoreDashboardContext(_jobStorage, _dashboardOptions, httpContext);
 
@@ -36,19 +37,20 @@ namespace DocsVision.Monitoring.Middleware
 			var dispatcher = _routeCollection.FindDispatcher(path.Value);
 			if (dispatcher == null)
 			{
-				return _next.Invoke(httpContext);
+				await _next.Invoke(httpContext);
 			}
 
 			foreach (var filter in _dashboardOptions.Authorization)
 			{
 				if (!filter.Authorize(dashboardContext))
 				{
-					return Task.FromResult(0);
+					await httpContext.ChallengeAsync();
+					return;
 				}
 			}
 
 			dashboardContext.UriMatch = dispatcher.Item2;
-			return dispatcher.Item1.Dispatch(dashboardContext);
+			await dispatcher.Item1.Dispatch(dashboardContext);
 		}
 	}
 }
