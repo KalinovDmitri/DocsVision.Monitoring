@@ -1,28 +1,51 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-		<meta name="description" content="Simple web service to monitor DocsVision documents" />
-		<meta name="author" content="Dmitry Kalinov" />
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="Simple web service to monitor DocsVision documents" />
+	<meta name="author" content="Dmitry Kalinov" />
 
-		<environment include="Development">
-			<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-			<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
+	<environment include="Development">
+		<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="~/lib/kendo/styles/kendo.bootstrap-v4.min.css" />
 
-			<script src="~/lib/jquery/jquery.js"></script>
-			<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-		</environment>
+		<link rel="stylesheet" type="text/css" href="~/css/site.css" asp-append-version="true" />
 
-		<environment exclude="Development">
-			<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-			<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.min.css" />
+		<script src="~/lib/jquery/jquery.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="~/lib/kendo/js/kendo.all.min.js"></script>
+	</environment>
 
-			<script src="~/lib/jquery/jquery.min.js"></script>
-			<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-		</environment>
-	</head>
-	<body>
-		@RenderBody()
-	</body>
+	<environment exclude="Development">
+		<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="~/lib/kendo/styles/kendo.bootstrap-v4.min.css" />
+
+		<link rel="stylesheet" type="text/css" href="~/css/site.min.css" asp-append-version="true" />
+
+		<script src="~/lib/jquery/jquery.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="~/lib/kendo/js/kendo.all.min.js"></script>
+	</environment>
+</head>
+<body>
+	<div class="mainwrap">
+		<header class="header"></header>
+
+		<main class="content">
+			@RenderBody()
+		</main>
+
+		<hr />
+		<footer class="footer">
+			<div class="footline">
+				<div class="footcontainer">
+					© 1951 - @DateTime.Now.Year ПАО "Самаранефтехимпроект"
+				</div>
+			</div>
+		</footer>
+	</div>
+</body>
 </html>
