@@ -9,43 +9,44 @@
 	<environment include="Development">
 		<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" type="text/css" href="~/lib/kendo/styles/kendo.bootstrap-v4.min.css" />
 
 		<link rel="stylesheet" type="text/css" href="~/css/site.css" asp-append-version="true" />
 
 		<script src="~/lib/jquery/jquery.js"></script>
 		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="~/lib/kendo/js/kendo.all.min.js"></script>
 	</environment>
 
 	<environment exclude="Development">
 		<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="~/lib/kendo/styles/kendo.bootstrap-v4.min.css" />
 
 		<link rel="stylesheet" type="text/css" href="~/css/site.min.css" asp-append-version="true" />
 
 		<script src="~/lib/jquery/jquery.min.js"></script>
 		<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="~/lib/kendo/js/kendo.all.min.js"></script>
 	</environment>
+
+	<link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.common.min.css" />
+	<link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.bootstrap-v4.min.css" />
+
+	<script src="~/lib/kendo/jszip.min.js"></script>
+	<script src="~/lib/kendo/kendo.all.min.js" async defer></script>
 </head>
 <body>
 	<div class="mainwrap">
-		<header class="header"></header>
+		<span class="fa fa-user-o fa-2x"></span>
+
+		@await Html.PartialAsync("_Header")
 
 		<main class="content">
 			@RenderBody()
 		</main>
 
 		<hr />
-		<footer class="footer">
-			<div class="footline">
-				<div class="footcontainer">
-					© 1951 - @DateTime.Now.Year ПАО "Самаранефтехимпроект"
-				</div>
-			</div>
-		</footer>
+		
+		@await Html.PartialAsync("_Footer")
 	</div>
+
+	@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

@@ -2,7 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <UserSecretsId>3afa83f1-e9b9-42eb-a604-7972c2c34932</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\kendo\js\**" />
+    <Compile Remove="wwwroot\lib\kendo\styles\**" />
+    <Content Remove="wwwroot\lib\kendo\js\**" />
+    <Content Remove="wwwroot\lib\kendo\styles\**" />
+    <EmbeddedResource Remove="wwwroot\lib\kendo\js\**" />
+    <EmbeddedResource Remove="wwwroot\lib\kendo\styles\**" />
+    <None Remove="wwwroot\lib\kendo\js\**" />
+    <None Remove="wwwroot\lib\kendo\styles\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
@@ -19,8 +32,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\kendo\js\" />
-    <Folder Include="wwwroot\lib\kendo\styles\" />
+    <Folder Include="wwwroot\lib\kendo\vsdoc\" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
 
 </Project>
