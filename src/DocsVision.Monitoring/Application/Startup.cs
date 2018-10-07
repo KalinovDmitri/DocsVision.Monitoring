@@ -79,14 +79,24 @@ namespace DocsVision.Monitoring
 
 			app.UseHangfireServer();
 			
-			app.UseHangfireDashboardWithAuthentication(options: new DashboardOptions
+			if (_hostingEnvironment.IsDevelopment())
 			{
-				Authorization = new IDashboardAuthorizationFilter[]
+				app.UseHangfireDashboard(options: new DashboardOptions
 				{
+					DisplayStorageConnectionString = false
+				});
+			}
+			else
+			{
+				app.UseHangfireDashboardWithAuthentication(options: new DashboardOptions
+				{
+					Authorization = new IDashboardAuthorizationFilter[]
+					{
 					new HangfireAuthorizationFilter()
-				},
-				DisplayStorageConnectionString = false
-			});
+					},
+					DisplayStorageConnectionString = false
+				});
+			}
 		}
 
 		private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
