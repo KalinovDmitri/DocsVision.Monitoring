@@ -77,7 +77,11 @@ namespace DocsVision.Monitoring
 
 			app.UseMvc(BuildRoutes);
 
-			app.UseHangfireServer();
+			var queueName = _configuration["Hangfire:QueueName"];
+			app.UseHangfireServer(options: new BackgroundJobServerOptions
+			{
+				Queues = new[] { queueName }
+			});
 			
 			if (_hostingEnvironment.IsDevelopment())
 			{
@@ -92,7 +96,7 @@ namespace DocsVision.Monitoring
 				{
 					Authorization = new IDashboardAuthorizationFilter[]
 					{
-					new HangfireAuthorizationFilter()
+						new HangfireAuthorizationFilter()
 					},
 					DisplayStorageConnectionString = false
 				});
