@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -116,6 +117,8 @@ namespace DocsVision.Monitoring
 					DisplayStorageConnectionString = false
 				});
 			}
+
+			ScheduleHangfireJobs();
 		}
 
 		private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
@@ -164,6 +167,19 @@ namespace DocsVision.Monitoring
 					.CommandTimeout(60)
 					.UseRelationalNulls();
 			});
+		}
+
+		private void ScheduleHangfireJobs()
+		{
+			var queueName = _configuration["Hangfire:QueueName"];
+
+			RecurringJob.AddOrUpdate(
+				"ProcessDocumentsWithoutShortcuts",
+				(IDocsVisionMonitoringService s) => s.ProcessDocumentsWithoutShortcutsAsync(),
+				Cron.MinuteInterval(5),
+				TimeZoneInfo.Utc,
+				queueName
+				);
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)
