@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DocsVision.Monitoring.Services
 {
-	public interface IDocsVisionMonitoringService
+	public interface IDocsVisionMonitoringService : IDisposable
 	{
 		Task ProcessDocumentsWithoutShortcutsAsync();
 	}
