@@ -10,9 +10,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.SqlServer;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+using DocsVision.Monitoring.DataModel.Framework;
 
 namespace DocsVision.Monitoring
 {
@@ -31,6 +37,12 @@ namespace DocsVision.Monitoring
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			services
+				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
+				.AddDbContext<MonitoringDbContext>(ConfigureMonitoringContext, optionsLifetime: ServiceLifetime.Singleton);
+
 			services
 				.AddMvc()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -53,6 +65,30 @@ namespace DocsVision.Monitoring
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseMvc(BuildRoutes);
+		}
+
+		private void ConfigureDocsVisionContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			var connectionString = _configuration.GetConnectionString("DocsVision");
+
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
+		}
+
+		private void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			var connectionString = _configuration.GetConnectionString("System");
+
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)
