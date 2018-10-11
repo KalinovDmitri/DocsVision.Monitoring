@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,7 +12,10 @@ namespace DocsVision.Monitoring.DataModel.Framework
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
+			foreach (var mapper in MonitoringDbSchema.GetMappers())
+			{
+				mapper.Map(modelBuilder);
+			}
 		}
 	}
 }

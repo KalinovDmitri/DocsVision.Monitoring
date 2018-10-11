@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.EntityFrameworkCore;
+
+using DocsVision.Monitoring.DataModel.Mapping;
 
 namespace DocsVision.Monitoring.DataModel.Framework
 {
@@ -10,7 +13,10 @@ namespace DocsVision.Monitoring.DataModel.Framework
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
+			foreach (var mapper in DocsVisionDbSchema.GetMappers())
+			{
+				mapper.Map(modelBuilder);
+			}
 		}
 	}
 }

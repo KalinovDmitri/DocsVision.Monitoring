@@ -53,6 +53,8 @@ namespace DocsVision.Monitoring
 		
 		public void Configure(IApplicationBuilder app)
 		{
+			MigrateDatabase(app.ApplicationServices);
+
 			if (_hostingEnvironment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -89,6 +91,16 @@ namespace DocsVision.Monitoring
 					.CommandTimeout(60)
 					.UseRelationalNulls();
 			});
+		}
+
+		private void MigrateDatabase(IServiceProvider services)
+		{
+			using (var scope = services.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
+
+				context.Database.Migrate();
+			}
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)
