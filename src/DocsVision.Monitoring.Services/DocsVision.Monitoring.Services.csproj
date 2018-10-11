@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel.Framework\DocsVision.Monitoring.DataModel.Framework.csproj" />
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj" />
     <ProjectReference Include="..\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj" />

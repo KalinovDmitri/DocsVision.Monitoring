@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +14,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+using DocsVision.Monitoring.Services;
 
 namespace DocsVision.Monitoring
 {
@@ -32,6 +35,13 @@ namespace DocsVision.Monitoring
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services
+				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(ConfigureCookieAuthentication);
+
+			services
+				.AddScoped<IUserService, UserService>();
+
+			services
 				.AddMvc()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -44,6 +54,7 @@ namespace DocsVision.Monitoring
 			if (_hostingEnvironment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseDatabaseErrorPage();
 			}
 			else
 			{
@@ -51,8 +62,25 @@ namespace DocsVision.Monitoring
 			}
 
 			app.UseHttpsRedirection();
+
 			app.UseStaticFiles();
+
+			app.UseAuthentication();
+
 			app.UseMvc(BuildRoutes);
+		}
+
+		private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
+		{
+			options.AccessDeniedPath = new PathString("/Account/Login");
+			options.LoginPath = new PathString("/Account/Login");
+			options.LogoutPath = new PathString("/Account/Logout");
+			options.ReturnUrlParameter = "returnUrl";
+
+			options.ExpireTimeSpan = TimeSpan.FromDays(1.0D);
+			options.SlidingExpiration = true;
+
+			options.Validate();
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)

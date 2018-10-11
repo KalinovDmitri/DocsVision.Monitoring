@@ -1,21 +1,18 @@
 ﻿using System;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocsVision.Monitoring.Controllers
 {
+	[Authorize]
 	public class HomeController : Controller
 	{
 		#region Action methods
 
 		public IActionResult Index()
 		{
-			if (User.Identity.IsAuthenticated)
-			{
-				return View();
-			}
-
-			return RedirectToAction("Login", "Account");
+			return View();
 		}
 		#endregion
 	}

@@ -12,6 +12,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.20" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.6.20" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
