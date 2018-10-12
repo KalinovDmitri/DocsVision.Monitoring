@@ -14,4 +14,8 @@
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mapping\DocsVision\RefStates\" />
+  </ItemGroup>
+
 </Project>
