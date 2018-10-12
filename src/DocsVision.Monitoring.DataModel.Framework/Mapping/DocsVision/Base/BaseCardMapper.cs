@@ -52,6 +52,11 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.HasForeignKey(x => x.CardTypeID)
 				.HasPrincipalKey(x => x.Id)
 				.HasConstraintName("dvsys_instances_fk_cardtypeid");
+
+			entityBuilder.HasOne(x => x.Dates)
+				.WithOne()
+				.HasForeignKey<BaseCardDates>(x => x.Id)
+				.HasPrincipalKey<BaseCard>(x => x.Id);
 		}
 	}
 }

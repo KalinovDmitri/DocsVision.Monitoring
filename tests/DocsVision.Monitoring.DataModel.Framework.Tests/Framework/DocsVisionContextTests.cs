@@ -24,7 +24,8 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 			var documentsQuery = from d in _context.Set<Document>()
 								 join si in _context.Set<DocumentSystemInfo>() on d.Id equals si.InstanceID into sij
 								 from sii in sij.DefaultIfEmpty()
-								 orderby d.Id descending
+								 where sii != null
+								 orderby d.Dates.CreationDateTime descending
 								 select new
 								 {
 									 InstanceID = d.Id,

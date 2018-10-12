@@ -31,6 +31,8 @@ namespace DocsVision.Monitoring.DataModel
 		
 		public virtual CardType Type { get; set; }
 
+		public virtual BaseCardDates Dates { get; set; }
+
 		public virtual SecurityInfo Security { get; set; }
 	}
 }
