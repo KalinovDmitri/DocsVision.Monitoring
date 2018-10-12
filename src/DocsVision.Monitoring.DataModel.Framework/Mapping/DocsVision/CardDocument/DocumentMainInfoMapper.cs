@@ -32,4 +32,9 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.IsUnicode(false);
 		}
 	}
+
+	public sealed class DocumentMainInfoMapper : DocumentMainInfoMapper<DocumentMainInfo>
+	{
+		public DocumentMainInfoMapper() : base() { }
+	}
 }

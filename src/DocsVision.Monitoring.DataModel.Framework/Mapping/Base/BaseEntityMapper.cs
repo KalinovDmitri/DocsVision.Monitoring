@@ -20,7 +20,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			_primaryKeyColumnName = primaryKeyColumnName;
 		}
 
-		public void Map(ModelBuilder modelBuilder)
+		public virtual void Map(ModelBuilder modelBuilder)
 		{
 			var entityBuilder = modelBuilder.Entity<TEntity>();
 
@@ -41,11 +41,12 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 		protected abstract string MakeTableName();
 
-		private string MakePrimaryKeyName()
+		protected virtual string MakePrimaryKeyName()
 		{
 			string keyName = string.Concat(MakeTableName(), "_pk_", _primaryKeyColumnName);
 
-			return keyName.ToLowerInvariant();
+			string loweredKeyName = keyName.ToLowerInvariant();
+			return loweredKeyName;
 		}
 	}
 }

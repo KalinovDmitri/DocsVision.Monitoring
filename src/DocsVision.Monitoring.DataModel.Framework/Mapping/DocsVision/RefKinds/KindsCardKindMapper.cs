@@ -7,9 +7,11 @@ using DocsVision.Monitoring.DataModel.CardDefs;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public class KindsCardKindMapper : BaseCardSectionRowMapper<KindsCardKind>
+	public sealed class KindsCardKindMapper : BaseCardSectionRowMapper<KindsCardKind>
 	{
 		public KindsCardKindMapper() : base(RefKinds.CardKinds.ID) { }
+
+		protected override string MakePrimaryKeyName() => "dvsys_refkinds_cardkinds_pk_rowid";
 
 		protected override void MapEntity(EntityTypeBuilder<KindsCardKind> entityBuilder)
 		{
@@ -24,7 +26,11 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.Property(x => x.UseOwnSettings);
 			entityBuilder.Property(x => x.NotAvailable);
 			entityBuilder.Property(x => x.Script);
-			entityBuilder.Property(x => x.ScriptProtect);
+
+			entityBuilder.Property(x => x.ScriptProtect)
+				.IsUnicode(true)
+				.HasMaxLength(1024);
+
 			entityBuilder.Property(x => x.UseOwnExtendedSettings);
 			entityBuilder.Property(x => x.Digest);
 			entityBuilder.Property(x => x.UniqueAttributesSearchQuery);
@@ -33,7 +39,13 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.Id)
+				.HasConstraintName("dvsys_refkinds_cardkinds_fk_sdid");
+
+			entityBuilder.HasIndex(x => new { x.Name, x.ParentTreeRowID, x.ParentRowID })
+				.ForSqlServerIsClustered(false)
+				.HasName("dvsys_refkinds_cardkinds_uc_tree_name")
+				.IsUnique(true);
 		}
 	}
 }

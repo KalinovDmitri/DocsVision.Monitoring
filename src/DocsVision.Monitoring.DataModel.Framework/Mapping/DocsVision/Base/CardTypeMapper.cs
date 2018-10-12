@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public class CardTypeMapper : DirectTableEntityMapper<Guid, CardType>
+	public sealed class CardTypeMapper : DirectTableEntityMapper<Guid, CardType>
 	{
 		public CardTypeMapper() : base("dvsys_carddefs", "CardTypeID") { }
 
@@ -34,11 +34,9 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.Property(x => x.Timestamp)
 				.IsRowVersion();
 
-			entityBuilder.Property(x => x.Timestamp)
-				.IsRowVersion();
-
 			entityBuilder.Property(x => x.TypeName)
-				.IsRowVersion();
+				.IsUnicode(false)
+				.HasMaxLength(2048);
 
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()

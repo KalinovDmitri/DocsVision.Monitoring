@@ -5,30 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public abstract class BaseCardMapper<TCard> : BaseEntityMapper<Guid, TCard> where TCard : BaseCard
+	public sealed class BaseCardMapper : DirectTableEntityMapper<Guid, BaseCard>
 	{
-		protected readonly Guid _cardTypeId;
+		public BaseCardMapper() : base("dvsys_instances", "InstanceID") { }
 
-		protected internal BaseCardMapper(Guid cardTypeId) : base("InstanceID")
-		{
-			if (cardTypeId == Guid.Empty)
-			{
-				throw new ArgumentException($"Card type Id cannot be equal to '{Guid.Empty}'.", nameof(cardTypeId));
-			}
-
-			_cardTypeId = cardTypeId;
-		}
-
-		protected override sealed string MakeTableName() => "dvsys_instances";
-
-		protected override void MapEntity(EntityTypeBuilder<TCard> entityBuilder)
+		protected override void MapEntity(EntityTypeBuilder<BaseCard> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
-
-			entityBuilder
-				.HasBaseType<BaseCard>()
-				.HasDiscriminator(x => x.CardTypeID)
-				.HasValue<TCard>(_cardTypeId);
 
 			entityBuilder.Property(x => x.Timestamp)
 				.IsRowVersion()
@@ -69,7 +52,6 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.HasForeignKey(x => x.CardTypeID)
 				.HasPrincipalKey(x => x.Id)
 				.HasConstraintName("dvsys_instances_fk_cardtypeid");
-
 		}
 	}
 }
