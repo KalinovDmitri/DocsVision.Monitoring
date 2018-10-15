@@ -14,9 +14,4 @@
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapping\" />
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

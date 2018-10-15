@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Services", "src\DocsVision.Monitoring.Services\DocsVision.Monitoring.Services.csproj", "{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.DataModel.Framework.Tests", "tests\DocsVision.Monitoring.DataModel.Framework.Tests\DocsVision.Monitoring.DataModel.Framework.Tests.csproj", "{FAFC7718-D232-4BA5-8486-B30788CED2FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{C898B879-DA20-4380-8DA9-D9E7747220D7} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{815EB101-6DF9-4324-AA26-89119DC684BE} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
+		{FAFC7718-D232-4BA5-8486-B30788CED2FE} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1AB6AED-7251-4723-B84F-200BB09584D2}

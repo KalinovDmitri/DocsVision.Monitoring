@@ -75,6 +75,8 @@ namespace DocsVision.Monitoring
 
 		public void Configure(IApplicationBuilder app)
 		{
+			MigrateDatabase(app.ApplicationServices);
+
 			if (_hostingEnvironment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -169,6 +171,16 @@ namespace DocsVision.Monitoring
 			});
 		}
 
+		private void MigrateDatabase(IServiceProvider services)
+		{
+			using (var scope = services.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
+
+				context.Database.Migrate();
+			}
+		}
+
 		private void ScheduleHangfireJobs()
 		{
 			var queueName = _configuration["Hangfire:QueueName"];
@@ -178,8 +190,7 @@ namespace DocsVision.Monitoring
 				(IDocsVisionMonitoringService s) => s.ProcessDocumentsWithoutShortcutsAsync(),
 				Cron.MinuteInterval(5),
 				TimeZoneInfo.Utc,
-				queueName
-				);
+				queueName);
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)
