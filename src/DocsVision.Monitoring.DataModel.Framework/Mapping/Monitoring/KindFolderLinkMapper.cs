@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
@@ -17,6 +18,14 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 			entityBuilder.Property(x => x.FolderID)
 				.IsRequired();
+
+			entityBuilder.Property(x => x.IsActive)
+				.HasDefaultValueSql("1");
+
+			entityBuilder.Property(x => x.CreatedAt)
+				.HasDefaultValueSql("GETDATE()");
+
+			entityBuilder.Property(x => x.UpdatedAt);
 		}
 	}
 }
