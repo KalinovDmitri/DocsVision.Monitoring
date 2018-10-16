@@ -47,6 +47,12 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 			entityBuilder.Property(x => x.IconID);
 
+			entityBuilder.HasOne(x => x.Security)
+				.WithMany()
+				.HasForeignKey(x => x.SDID)
+				.HasPrincipalKey(x => x.Id)
+				.HasConstraintName("dvsys_instances_fk_sdid");
+
 			entityBuilder.HasOne(x => x.Type)
 				.WithMany()
 				.HasForeignKey(x => x.CardTypeID)
