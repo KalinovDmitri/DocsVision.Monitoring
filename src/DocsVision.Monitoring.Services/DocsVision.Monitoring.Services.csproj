@@ -16,8 +16,4 @@
     <ProjectReference Include="..\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

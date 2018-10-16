@@ -57,6 +57,8 @@ namespace DocsVision.Monitoring
 				.AddDbContext<MonitoringDbContext>(ConfigureMonitoringContext, optionsLifetime: ServiceLifetime.Singleton);
 
 			services
+				.AddScoped<IConfigurationService, ConfigurationService>()
+				.AddScoped<IDocsVisionService, DocsVisionService>()
 				.AddScoped<IDocsVisionMonitoringService, DocsVisionMonitoringService>();
 
 			services

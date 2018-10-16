@@ -11,6 +11,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Newtonsoft.Json;
 
+using DocsVision.Monitoring.Tests.Common;
+
 namespace DocsVision.Monitoring.DataModel.Framework.Tests
 {
 	[TestClass]

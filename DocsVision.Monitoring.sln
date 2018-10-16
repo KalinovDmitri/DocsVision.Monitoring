@@ -17,7 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Services", "src\DocsVision.Monitoring.Services\DocsVision.Monitoring.Services.csproj", "{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.DataModel.Framework.Tests", "tests\DocsVision.Monitoring.DataModel.Framework.Tests\DocsVision.Monitoring.DataModel.Framework.Tests.csproj", "{FAFC7718-D232-4BA5-8486-B30788CED2FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.DataModel.Framework.Tests", "tests\DocsVision.Monitoring.DataModel.Framework.Tests\DocsVision.Monitoring.DataModel.Framework.Tests.csproj", "{FAFC7718-D232-4BA5-8486-B30788CED2FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Services.Tests", "tests\DocsVision.Monitoring.Services.Tests\DocsVision.Monitoring.Services.Tests.csproj", "{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Tests.Common", "tests\DocsVision.Monitoring.Tests.Common\DocsVision.Monitoring.Tests.Common.csproj", "{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +72,8 @@ Global
 		{815EB101-6DF9-4324-AA26-89119DC684BE} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
+		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
+		{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1AB6AED-7251-4723-B84F-200BB09584D2}

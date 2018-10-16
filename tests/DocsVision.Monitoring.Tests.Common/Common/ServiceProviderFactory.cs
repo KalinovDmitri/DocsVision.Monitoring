@@ -10,16 +10,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
-namespace DocsVision.Monitoring.DataModel.Framework.Tests
+using DocsVision.Monitoring.DataModel.Framework;
+using DocsVision.Monitoring.Services;
+
+namespace DocsVision.Monitoring.Tests.Common
 {
-	internal static class ServiceProviderFactory
+	public static class ServiceProviderFactory
 	{
 		private const string MonitoringConnectionString =
-			"Data Source=PC-2535;Initial Catalog=DocsVisionMonitoring;User ID=sa;Password=saionara;Connect Timeout=30;" +
+			"Data Source=(local);Initial Catalog=DocsVisionMonitoring;User ID=sa;Password=saionara;Connect Timeout=30;" +
 			"Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 		private const string DocsVisionConnectionString =
-			"Data Source=PC-2535;Initial Catalog=DocsVision5_MIH;User ID=sa;Password=saionara;Connect Timeout=30;" +
+			"Data Source=(local);Initial Catalog=DocsVision5_MIH;User ID=sa;Password=saionara;Connect Timeout=30;" +
 			"Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 		private static ILoggerFactory _loggerFactory;
@@ -37,6 +40,11 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 			services
 				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
 
+			services
+				.AddScoped<IConfigurationService, ConfigurationService>()
+				.AddScoped<IDocsVisionService, DocsVisionService>()
+				.AddScoped<IDocsVisionMonitoringService, DocsVisionMonitoringService>();
+
 			var provider = services.BuildServiceProvider(true);
 			return provider;
 		}
@@ -48,7 +56,7 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 				.SetMinimumLevel(LogLevel.Trace);
 		}
 
-		private static bool FilterLogLevel(string msg, LogLevel level) => true;
+		private static bool FilterLogLevel(string category, LogLevel level) => true;
 
 		private static ILoggerFactory GetOrCreateLoggerFactory()
 		{
