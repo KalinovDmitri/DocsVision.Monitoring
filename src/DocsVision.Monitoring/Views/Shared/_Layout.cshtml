@@ -30,21 +30,31 @@
 	<link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.bootstrap-v4.min.css" />
 
 	<script src="~/lib/kendo/jszip.min.js"></script>
-	<script src="~/lib/kendo/kendo.all.min.js" async defer></script>
+	<script src="~/lib/kendo/kendo.all.min.js"></script>
+
+    <script src="~/js/site.js"></script>
 </head>
 <body>
-	<div class="mainwrap">
-		@await Html.PartialAsync("_Header")
+    <div class="top-container">
+        @await Html.PartialAsync("_Header")
+    </div>
 
-		<main class="container">
-			@RenderBody()
-		</main>
+    <div class="nav-container">
+        @await Html.PartialAsync("_Navigation")
+    </div>
 
-		<hr />
-		
-		@await Html.PartialAsync("_Footer")
-	</div>
+    <div>
+        <main class="main-container">
+            @RenderBody()
+        </main>
+    </div>
 
-	@await RenderSectionAsync("Scripts", false)
+    <hr />
+
+    <div class="bottom-container">
+        @await Html.PartialAsync("_Footer")
+    </div>
+
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>
