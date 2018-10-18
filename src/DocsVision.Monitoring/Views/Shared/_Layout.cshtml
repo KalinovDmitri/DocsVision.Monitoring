@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IHostingEnvironment hostEnvironment
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -40,14 +42,15 @@
     </div>
 
     <div class="nav-container">
-        @await Html.PartialAsync("_Navigation")
+        @if (User.Identity.IsAuthenticated || hostEnvironment.IsDevelopment())
+        {
+            @await Html.PartialAsync("_Navigation")
+        }
     </div>
 
-    <div>
-        <main class="main-container">
-            @RenderBody()
-        </main>
-    </div>
+    <main class="row main-container">
+        @RenderBody()
+    </main>
 
     <hr />
 

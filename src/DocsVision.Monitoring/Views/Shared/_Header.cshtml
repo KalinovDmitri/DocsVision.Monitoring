@@ -1,4 +1,6 @@
-﻿<header class="header">
+﻿@inject IHostingEnvironment hostEnvironment
+
+<header class="header">
     <div class="bar top-bar">
         <div class="bar-container">
             <div class="row">
@@ -12,8 +14,16 @@
                     <div class="bar-item">
                         <a href="/">Сервисы мониторинга СЭД DocsVision</a>
                     </div>
-                    <div class="ml-auto">
+                    
+                    <div class="ml-auto mr-auto">
                     </div>
+
+                    @if (User.Identity.IsAuthenticated || hostEnvironment.IsDevelopment())
+                    {
+                        <div class="bar-item pull-right">
+                            <span>User info + logout</span>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
