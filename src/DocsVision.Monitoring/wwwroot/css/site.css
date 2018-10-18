@@ -7,6 +7,11 @@
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
+	box-sizing:border-box;
+}
+
+html, body {
+	height:100%;
 }
 
 body {
@@ -37,17 +42,15 @@ div {
 
 .nav-container {
 	width: 100%;
-	overflow: hidden;
 	padding-left: 3vh;
 	padding-right: 3vh;
-	z-index:10;
+	padding-bottom: 3vh;
 }
 
 .main-container {
 	width: 100%;
-	overflow: hidden;
-	padding-left: 10vh;
-	padding-right: 10vh;
+	padding-left: 5vh;
+	padding-right: 5vh;
 	min-height: 20vh !important;
 	z-index:1;
 }
@@ -113,7 +116,7 @@ div {
 body nav.admin-navbar {
 	background: #fff;
 	border: none;
-	z-index: auto;
+	z-index: 100;
 }
 
 	body nav.admin-navbar .modal-body {
@@ -210,3 +213,7 @@ body nav.admin-navbar {
 					body nav.admin-navbar .container .navbar-content ul.nav-tabs > li > form > .btn ul.nav-tabs > li {
 						margin: 0 6px 0 0;
 					}
+
+.body-content {
+	padding: 3vh 2vh 0 2vh;
+}
