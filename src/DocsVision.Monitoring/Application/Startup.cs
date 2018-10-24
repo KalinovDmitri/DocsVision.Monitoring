@@ -11,10 +11,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.SqlServer;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using DocsVision.Monitoring.DataModel.Framework;
 using DocsVision.Monitoring.Services;
 
 namespace DocsVision.Monitoring
@@ -35,6 +40,12 @@ namespace DocsVision.Monitoring
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services
+				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
+				.AddDbContext<MonitoringDbContext>(ConfigureMonitoringContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
 				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(ConfigureCookieAuthentication);
 
@@ -51,6 +62,8 @@ namespace DocsVision.Monitoring
 		
 		public void Configure(IApplicationBuilder app)
 		{
+			MigrateDatabase(app.ApplicationServices);
+
 			if (_hostingEnvironment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -62,6 +75,40 @@ namespace DocsVision.Monitoring
 			app.UseAuthentication();
 
 			app.UseMvc(BuildRoutes);
+		}
+
+		private void ConfigureDocsVisionContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			var connectionString = _configuration.GetConnectionString("DocsVision");
+
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
+		}
+
+		private void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			var connectionString = _configuration.GetConnectionString("System");
+
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
+		}
+
+		private void MigrateDatabase(IServiceProvider services)
+		{
+			using (var scope = services.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
+
+				context.Database.Migrate();
+			}
 		}
 
 		private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
