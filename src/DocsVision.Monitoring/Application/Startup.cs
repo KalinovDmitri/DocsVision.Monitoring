@@ -39,7 +39,7 @@ namespace DocsVision.Monitoring
 				.AddCookie(ConfigureCookieAuthentication);
 
 			services
-				.AddScoped<IUserService, UserService>();
+				.AddScoped<IAccountService, ActiveDirectoryAccountService>();
 
 			services
 				.AddMvc()
@@ -56,12 +56,6 @@ namespace DocsVision.Monitoring
 				app.UseDeveloperExceptionPage();
 				app.UseDatabaseErrorPage();
 			}
-			else
-			{
-				app.UseHsts();
-			}
-
-			app.UseHttpsRedirection();
 
 			app.UseStaticFiles();
 

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 using DocsVision.Monitoring.Models;
 
 namespace DocsVision.Monitoring.Services
 {
-	public class UserService : IUserService
+	public class ActiveDirectoryAccountService : IAccountService
 	{
-		public OperationResult<ClaimsPrincipal> FindUser(string userName, string password)
+		public async Task<OperationResult<ClaimsPrincipal>> AuthenticateAsync(string userName, string password)
 		{
+			await Task.Yield();
+
 			try
 			{
 				return OperationResult.Ok(new ClaimsPrincipal(new[]

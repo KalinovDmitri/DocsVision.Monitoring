@@ -18,14 +18,14 @@ namespace DocsVision.Monitoring.Controllers
 	{
 		#region Fields and properties
 
-		private IUserService _userService;
+		private IAccountService _accountService;
 		#endregion
 
 		#region Constructors
 
-		public AccountController(IUserService userService)
+		public AccountController(IAccountService accountService)
 		{
-			_userService = userService;
+			_accountService = accountService;
 		}
 		#endregion
 
@@ -43,14 +43,14 @@ namespace DocsVision.Monitoring.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login([FromForm] LoginModel model, string returnUrl)
 		{
-			var result = _userService.FindUser(model.UserName, model.Password);
+			var result = await _accountService.AuthenticateAsync(model.UserName, model.Password);
 			if (result.Succeeded)
 			{
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, result.Data);
 
 				return RedirectTo(returnUrl);
 			}
-
+			
 			ModelState.AddModelError(string.Empty, result.ErrorMessage);
 
 			return View(model);
