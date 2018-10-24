@@ -9,7 +9,7 @@ namespace DocsVision.Monitoring.DataModel
 
 		public Guid? CardTypeID { get; set; }
 
-		public string Description { get; set; } // nvarchar 512
+		public string Description { get; set; }
 
 		public Guid? SDID { get; set; }
 
@@ -25,7 +25,7 @@ namespace DocsVision.Monitoring.DataModel
 
 		public int Order { get; set; }
 
-		public string Barcode { get; set; } // varchar 32
+		public string Barcode { get; set; }
 
 		public Guid? IconID { get; set; }
 		

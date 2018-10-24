@@ -49,6 +49,8 @@ namespace DocsVision.Monitoring.DataModel
 
 		public virtual SecurityInfo Security { get; set; }
 
+		public virtual Folder ParentFolder { get; set; }
+
 		public virtual ICollection<Shortcut> Shortcuts { get; set; }
 	}
 }

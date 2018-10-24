@@ -6,7 +6,7 @@ namespace DocsVision.Monitoring.DataModel
 	{
 		public Guid? SDID { get; set; }
 
-		public string Name { get; set; } // nvarchar 256
+		public string Name { get; set; }
 
 		public bool? UseOwnLayouts { get; set; }
 
@@ -16,11 +16,11 @@ namespace DocsVision.Monitoring.DataModel
 
 		public Guid? Script { get; set; }
 
-		public string ScriptProtect { get; set; } // nvarchar(1024)
+		public string ScriptProtect { get; set; }
 
 		public bool? UseOwnExtendedSettings { get; set; }
 
-		public string Digest { get; set; } // nvarchar max
+		public string Digest { get; set; }
 
 		public Guid? UniqueAttributesSearchQuery { get; set; }
 
