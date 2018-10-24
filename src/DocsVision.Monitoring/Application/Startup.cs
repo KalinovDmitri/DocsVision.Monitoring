@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using DocsVision.Monitoring.DataModel.Framework;
+using DocsVision.Monitoring.Options;
 using DocsVision.Monitoring.Services;
 
 namespace DocsVision.Monitoring
@@ -39,6 +40,10 @@ namespace DocsVision.Monitoring
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			services
+				.AddOptions()
+				.Configure<ActiveDirectoryOptions>(_configuration.GetSection("ActiveDirectory"));
+
 			services
 				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
 

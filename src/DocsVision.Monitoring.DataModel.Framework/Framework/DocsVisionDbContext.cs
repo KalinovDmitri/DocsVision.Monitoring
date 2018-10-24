@@ -17,6 +17,8 @@ namespace DocsVision.Monitoring.DataModel.Framework
 			{
 				mapper.Map(modelBuilder);
 			}
+
+			modelBuilder.Query<Identity>();
 		}
 	}
 }

@@ -16,6 +16,7 @@
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel.Framework\DocsVision.Monitoring.DataModel.Framework.csproj" />
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj" />
     <ProjectReference Include="..\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj" />
+    <ProjectReference Include="..\DocsVision.Monitoring.Resources\DocsVision.Monitoring.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
