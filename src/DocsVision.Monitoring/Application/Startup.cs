@@ -125,6 +125,26 @@ namespace DocsVision.Monitoring
 			}
 		}
 
+		private void ConfigureDbContext(DbContextOptionsBuilder optionsBuilder, string connectionString)
+		{
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
+		}
+		
+		private void ConfigureDocsVisionContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			ConfigureDbContext(optionsBuilder, _configuration.GetConnectionString("DocsVision"));
+		}
+
+		private void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			ConfigureDbContext(optionsBuilder, _configuration.GetConnectionString("System"));
+		}
+
 		private void ConfigureCookieAuthentication(CookieAuthenticationOptions options)
 		{
 			options.AccessDeniedPath = new PathString("/Account/Login");
