@@ -23,14 +23,19 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.Property(x => x.BuiltInState);
 			entityBuilder.Property(x => x.DefaultNameUID);
 
+			entityBuilder.HasMany(x => x.StateNames)
+				.WithOne()
+				.HasForeignKey(x => x.ParentRowID)
+				.HasPrincipalKey(x => x.Id);
+
 			entityBuilder.HasIndex(x => x.ParentRowID)
-				.HasName("dvsys_refstates_states_section")
-				.ForSqlServerIsClustered(true);
+				.ForSqlServerIsClustered(true)
+				.HasName("dvsys_refstates_states_section");
 
 			entityBuilder.HasIndex(x => new { x.DefaultName, x.ParentRowID, x.DefaultNameUID })
-				.HasName("dvsys_refstates_states_uc_section_defaultname")
 				.ForSqlServerIsClustered(false)
-				.IsUnique(true);
+				.IsUnique(true)
+				.HasName("dvsys_refstates_states_uc_section_defaultname");
 		}
 	}
 }

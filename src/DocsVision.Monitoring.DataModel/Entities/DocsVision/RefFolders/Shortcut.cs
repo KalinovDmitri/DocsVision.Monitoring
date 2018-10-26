@@ -10,7 +10,7 @@ namespace DocsVision.Monitoring.DataModel
 
 		public Guid? Mode { get; set; }
 
-		public string Description { get; set; } // nvarchar 512 null
+		public string Description { get; set; }
 
 		public bool? Deleted { get; set; }
 
@@ -19,5 +19,7 @@ namespace DocsVision.Monitoring.DataModel
 		public DateTime? CreationDateTime { get; set; }
 
 		public Guid? HardCardIDUID { get; set; }
+
+		public virtual Folder ParentFolder { get; set; }
 	}
 }

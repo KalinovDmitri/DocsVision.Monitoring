@@ -57,24 +57,7 @@ namespace DocsVision.Monitoring.Tests.Common
 		}
 
 		private static bool FilterLogLevel(string category, LogLevel level) => true;
-
-		private static ILoggerFactory GetOrCreateLoggerFactory()
-		{
-			if (_loggerFactory == null)
-			{
-				var loggerProvider = new ConsoleLoggerProvider(new ConsoleLoggerSettings
-				{
-					DisableColors = false
-				});
-
-				var loggerFactory = new LoggerFactory(new[] { loggerProvider });
-
-				_loggerFactory = loggerFactory;
-			}
-
-			return _loggerFactory;
-		}
-
+		
 		private static void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
 		{
 			ConfigureDbContext(optionsBuilder, MonitoringConnectionString);
@@ -87,11 +70,8 @@ namespace DocsVision.Monitoring.Tests.Common
 
 		private static void ConfigureDbContext(DbContextOptionsBuilder optionsBuilder, string connectionString)
 		{
-			//var loggerFactory = GetOrCreateLoggerFactory();
-
 			optionsBuilder
 				.EnableSensitiveDataLogging()
-				//.UseLoggerFactory(loggerFactory)
 				.UseSqlServer(connectionString,
 					(sqlOptions) =>
 					{

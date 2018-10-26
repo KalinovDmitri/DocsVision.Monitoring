@@ -28,14 +28,20 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.Property(x => x.CreationDateTime);
 			entityBuilder.Property(x => x.HardCardIDUID);
 
+			entityBuilder.HasOne(x => x.ParentFolder)
+				.WithMany()
+				.HasForeignKey(x => x.ParentRowID)
+				.HasPrincipalKey(x => x.Id)
+				.HasConstraintName("dvsys_folderscard_shortcuts_fk_parentrowid");
+
 			entityBuilder.HasIndex(x => x.ParentRowID)
-				.HasName("dvsys_folderscard_shortcuts_section")
-				.ForSqlServerIsClustered(true);
+				.ForSqlServerIsClustered(true)
+				.HasName("dvsys_folderscard_shortcuts_section");
 
 			entityBuilder.HasIndex(x => new { x.HardCardID, x.HardCardIDUID })
-				.HasName("dvsys_folderscard_shortcuts_uc_global_hardcardid")
 				.ForSqlServerIsClustered(false)
-				.IsUnique(true);
+				.IsUnique(true)
+				.HasName("dvsys_folderscard_shortcuts_uc_global_hardcardid");
 		}
 	}
 }

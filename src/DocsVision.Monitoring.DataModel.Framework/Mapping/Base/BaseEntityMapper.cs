@@ -8,7 +8,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 {
 	public abstract class BaseEntityMapper<TKey, TEntity> : IEntityMapper where TKey : struct where TEntity : BaseEntity<TKey>
 	{
-		private readonly string _primaryKeyColumnName;
+		protected readonly string _primaryKeyColumnName;
 
 		protected internal BaseEntityMapper(string primaryKeyColumnName = "Id")
 		{
@@ -26,15 +26,20 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 			entityBuilder.ToTable(MakeTableName(), "dbo");
 
-			entityBuilder.HasKey(x => x.Id)
-				.HasName(MakePrimaryKeyName())
-				.ForSqlServerIsClustered(false);
+			MapPrimaryKey(entityBuilder);
 
 			entityBuilder.Property(x => x.Id)
 				.HasColumnName(_primaryKeyColumnName)
 				.IsRequired();
 
 			MapEntity(entityBuilder);
+		}
+
+		protected virtual void MapPrimaryKey(EntityTypeBuilder<TEntity> entityBuilder)
+		{
+			entityBuilder.HasKey(x => x.Id)
+				.HasName(MakePrimaryKeyName())
+				.ForSqlServerIsClustered(false);
 		}
 
 		protected virtual void MapEntity(EntityTypeBuilder<TEntity> entityBuilder) { }
