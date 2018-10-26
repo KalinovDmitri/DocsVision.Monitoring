@@ -9,6 +9,13 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	{
 		public CardTypeMapper() : base("dvsys_carddefs", "CardTypeID") { }
 
+		protected override void MapPrimaryKey(EntityTypeBuilder<CardType> entityBuilder)
+		{
+			entityBuilder.HasKey(x => x.Id)
+				.HasName(MakePrimaryKeyName())
+				.ForSqlServerIsClustered(true);
+		}
+
 		protected override void MapEntity(EntityTypeBuilder<CardType> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -24,7 +31,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.Property(x => x.ControlInfo)
 				.IsUnicode(false)
 				.HasMaxLength(256);
-
+			
 			entityBuilder.Property(x => x.XMLSchema);
 			entityBuilder.Property(x => x.XSDSchema);
 			entityBuilder.Property(x => x.Icon);
@@ -41,7 +48,8 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.Id)
+				.HasConstraintName("dvsys_carddefs_fk_sdid");
 		}
 	}
 }

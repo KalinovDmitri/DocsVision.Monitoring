@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DocsVision.Monitoring.DataModel
 {
@@ -11,5 +12,7 @@ namespace DocsVision.Monitoring.DataModel
 		public Guid? BuiltInState { get; set; }
 
 		public Guid? DefaultNameUID { get; set; }
+
+		public virtual ICollection<StatesStateName> StateNames { get; set; }
 	}
 }
