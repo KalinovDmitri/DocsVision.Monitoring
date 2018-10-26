@@ -14,5 +14,12 @@ namespace DocsVision.Monitoring.DataModel.CardDefs
 
 			public const string Alias = nameof(RefStates.States);
 		}
+
+		public static class StateNames
+		{
+			public static readonly Guid ID = new Guid("DA37CA71-A977-48E9-A4FD-A2B30479E824");
+
+			public const string Alias = nameof(RefStates.StateNames);
+		}
 	}
 }

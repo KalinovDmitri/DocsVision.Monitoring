@@ -29,7 +29,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 			modelBuilder.Entity<BaseCard>()
 				.HasDiscriminator(x => x.CardTypeID)
-				.HasValue<Document>(_cardTypeId);
+				.HasValue<TCard>(_cardTypeId);
 
 			MapEntity(entityBuilder);
 		}

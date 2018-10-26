@@ -6,6 +6,6 @@ namespace DocsVision.Monitoring.DataModel
 	{
 		public int? Hash { get; set; }
 
-		public string SecurityDesc { get; set; } // varchar max
+		public string SecurityDesc { get; set; }
 	}
 }
