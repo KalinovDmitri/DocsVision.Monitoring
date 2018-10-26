@@ -5,9 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
+    <PackageReference Include="System.DirectoryServices" Version="4.5.0" />
+    <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel.Framework\DocsVision.Monitoring.DataModel.Framework.csproj" />
     <ProjectReference Include="..\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj" />
     <ProjectReference Include="..\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj" />
+    <ProjectReference Include="..\DocsVision.Monitoring.Resources\DocsVision.Monitoring.Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

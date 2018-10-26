@@ -3,61 +3,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Simple web service to monitor DocsVision documents" />
-    <meta name="author" content="Dmitry Kalinov" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="Simple web service to monitor DocsVision documents" />
+	<meta name="author" content="Dmitry Kalinov" />
 
-    <environment include="Development">
-        <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
+	<environment include="Development">
+		<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.css" />
 
-        <link rel="stylesheet" type="text/css" href="~/css/site.css" asp-append-version="true" />
+		<link rel="stylesheet" type="text/css" href="~/css/site.css" asp-append-version="true" />
 
-        <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    </environment>
+		<script src="~/lib/jquery/jquery.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="~/lib/jquery-validate/jquery.validate.js"></script>
+		<script src="~/lib/jquery-validate/localization/messages_ru.js"></script>
+		<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+	</environment>
 
-    <environment exclude="Development">
-        <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.min.css" />
+	<environment exclude="Development">
+		<link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.min.css" />
 
-        <link rel="stylesheet" type="text/css" href="~/css/site.min.css" asp-append-version="true" />
+		<link rel="stylesheet" type="text/css" href="~/css/site.min.css" asp-append-version="true" />
 
-        <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    </environment>
+		<script src="~/lib/jquery/jquery.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	</environment>
 
-    <link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.common.min.css" />
-    <link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.bootstrap-v4.min.css" />
+	<link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.common.min.css" />
+	<link rel="stylesheet" type="text/css" href="~/lib/kendo/kendo.bootstrap-v4.min.css" />
 
-    <script src="~/lib/kendo/jszip.min.js"></script>
-    <script src="~/lib/kendo/kendo.all.min.js"></script>
+	<script src="~/lib/kendo/jszip.min.js"></script>
+	<script src="~/lib/kendo/kendo.all.min.js"></script>
 
-    <script src="~/js/site.js"></script>
+	<script src="~/js/site.js"></script>
 </head>
 <body>
-    <div class="top-container">
-        @await Html.PartialAsync("_Header")
-    </div>
+	<div class="top-container">
+		@await Html.PartialAsync("_Header")
+	</div>
 
-    <div class="nav-container">
-        @if (User.Identity.IsAuthenticated || hostEnvironment.IsDevelopment())
-        {
-            @await Html.PartialAsync("_Navigation")
-        }
-    </div>
+	<div class="nav-container">
+		@if (User.Identity.IsAuthenticated || hostEnvironment.IsDevelopment())
+		{
+			@await Html.PartialAsync("_Navigation")
+		}
+	</div>
 
-    <main class="row main-container">
-        @RenderBody()
-    </main>
+	<main class="row main-container">
+		@RenderBody()
+	</main>
 
-    <hr />
+	<hr />
 
-    <div class="bottom-container">
-        @await Html.PartialAsync("_Footer")
-    </div>
+	<div class="bottom-container">
+		@await Html.PartialAsync("_Footer")
+	</div>
 
-    @await RenderSectionAsync("Scripts", false)
+	@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

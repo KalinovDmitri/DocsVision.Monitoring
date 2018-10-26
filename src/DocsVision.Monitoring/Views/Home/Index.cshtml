@@ -1,5 +1,21 @@
-﻿<div class="col-md-12">
-    <div class="bg-light" style="min-height:55vh;text-align:center;">
-        <span>PLACEHOLDER</span>
-    </div>
+﻿<h1>Home/Index</h1>
+
+<div class="col-md-12">
+	<div class="bg-light" style="min-height:55vh;text-align:center;">
+		<h2>User claims</h2>
+		<span>User is DocsVision Admin? @User.IsInRole("DocsVision Administrators")</span>
+
+		@foreach (var item in User.Claims)
+		{
+		<div class="row">
+			<div class="col-md-6">
+				<span>@item.Type</span> => <span>@item.Value</span>
+			</div>
+		</div>
+		}
+
+		<form asp-action="Logout" asp-controller="Account" method="post">
+			<input type="submit" class="btn btn-primary" value="Выход" />
+		</form>
+	</div>
 </div>

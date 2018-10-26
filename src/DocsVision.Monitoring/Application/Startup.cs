@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.SqlServer;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,8 +27,11 @@ using Hangfire.AspNetCore;
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 
+using DocsVision.Monitoring.DataModel.Framework;
 using DocsVision.Monitoring.Extensions;
 using DocsVision.Monitoring.Filters;
+using DocsVision.Monitoring.Options;
+using DocsVision.Monitoring.Services;
 
 namespace DocsVision.Monitoring
 {
@@ -44,11 +51,24 @@ namespace DocsVision.Monitoring
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services
+				.AddOptions()
+				.Configure<ActiveDirectoryOptions>(_configuration.GetSection("ActiveDirectory"));
+
+			services
+				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
+				.AddDbContext<MonitoringDbContext>(ConfigureMonitoringContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
 				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(ConfigureCookieAuthentication);
 
+			services
+				.AddScoped<IAccountService, ActiveDirectoryAccountService>();
+
 			services.AddHangfire(ConfigureHangfire);
-			
+
 			services
 				.AddMvc()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -59,6 +79,8 @@ namespace DocsVision.Monitoring
 
 		public void Configure(IApplicationBuilder app)
 		{
+			MigrateDatabase(app.ApplicationServices);
+
 			if (_hostingEnvironment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -125,6 +147,16 @@ namespace DocsVision.Monitoring
 				SchemaName = "Hangfire",
 				TransactionIsolationLevel = IsolationLevel.ReadCommitted
 			});
+		}
+
+		private void MigrateDatabase(IServiceProvider services)
+		{
+			using (var scope = services.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
+
+				context.Database.Migrate();
+			}
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)
