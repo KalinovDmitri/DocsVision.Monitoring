@@ -1,21 +1,28 @@
-﻿<h1>Home/Index</h1>
-
-<div class="col-md-12">
-	<div class="bg-light" style="min-height:55vh;text-align:center;">
+﻿<div class="col-md-12">
+	<div class="bg-light">
 		<h2>User claims</h2>
-		<span>User is DocsVision Admin? @User.IsInRole("DocsVision Administrators")</span>
+
+		<div class="row">
+			<div class="col-md-4">
+				<span>User is DocsVision Admin? </span>
+			</div>
+			<span> => </span>
+			<div class="col-md-4">
+				<span>@User.IsInRole("DocsVision Administrators")</span>
+			</div>
+		</div>
 
 		@foreach (var item in User.Claims)
 		{
-		<div class="row">
-			<div class="col-md-6">
-				<span>@item.Type</span> => <span>@item.Value</span>
+			<div class="row">
+				<div class="col-md-4">
+					<span>@item.Type</span>
+				</div>
+				<span> => </span>
+				<div class="col-md-4">
+					<span>@item.Value</span>
+				</div>
 			</div>
-		</div>
 		}
-
-		<form asp-action="Logout" asp-controller="Account" method="post">
-			<input type="submit" class="btn btn-primary" value="Выход" />
-		</form>
 	</div>
 </div>

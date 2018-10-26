@@ -55,14 +55,13 @@ namespace DocsVision.Monitoring.Controllers
 
 			return View(model);
 		}
-
-		[HttpPost]
+		
 		[Authorize]
-		public async Task<IActionResult> Logout()
+		public async Task<IActionResult> Logout(string returnUrl = "/")
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-			return RedirectTo("/");
+			return RedirectTo(returnUrl);
 		}
 		#endregion
 

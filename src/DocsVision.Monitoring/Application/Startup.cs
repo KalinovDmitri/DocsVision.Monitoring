@@ -27,6 +27,8 @@ using Hangfire.AspNetCore;
 using Hangfire.Dashboard;
 using Hangfire.SqlServer;
 
+using Newtonsoft.Json.Serialization;
+
 using DocsVision.Monitoring.DataModel.Framework;
 using DocsVision.Monitoring.Extensions;
 using DocsVision.Monitoring.Filters;

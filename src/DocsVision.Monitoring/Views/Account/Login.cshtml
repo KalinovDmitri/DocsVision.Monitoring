@@ -1,38 +1,29 @@
 ﻿@model LoginModel
 
-<h1 class="m-2">Account/Login</h1>
-
-@Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
-
-@using (Html.BeginForm("Login", "Account", new { returnUrl = ViewData["ReturnUrl"] }, FormMethod.Post))
-{
+<form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="form-signin">
 	@Html.AntiForgeryToken()
+
+	<img src="~/images/logo-docsvision.png" alt="DocsVision logo" height="60" style="margin:2vh;" />
+
+	<h1 class="h3 font-weight-normal" style="text-align:center;color:#A4A7AB;">Требуется вход</h1>
+
+	<div class="form-group" style="margin:2vh;">
+		<label asp-for="UserName" class="sr-only">Имя пользователя</label>
+		<input type="text" asp-for="UserName" class="form-control" placeholder="Имя пользователя" autofocus />
+
+		@Html.ValidationMessageFor(m => m.UserName, null, new { @class = "text-danger" })
+	</div>
 	
-	<div class="form-group">
-		<div class="col-md-2">
-			@Html.LabelFor(m => m.UserName)
-		</div>
-		<div class="col-md-2">
-			@Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-		</div>
-		<div class="col-md-2">
-			@Html.ValidationMessageFor(m => m.UserName, null, new { @class = "text-danger" })
-		</div>
+	<div class="form-group" style="margin:2vh;">
+		<label asp-for="Password" class="sr-only">Пароль</label>
+		<input type="password" asp-for="Password" class="form-control" placeholder="Пароль" />
+
+		@Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
 	</div>
-	<div class="form-group">
-		<div class="col-md-2">
-			@Html.LabelFor(m => m.Password)
-		</div>
-		<div class="col-md-2">
-			@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-		</div>
-		<div class="col-md-2">
-			@Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
-		</div>
+
+	@Html.ValidationSummary(true, null, new { @class = "alert alert-danger validation-no-list" })
+
+	<div class="form-group" style="margin:2vh;">
+		<button type="submit" class="btn btn-lg btn-primary btn-block">Вход</button>
 	</div>
-	<div class="form-group">
-		<div class="col-md-2">
-			<input type="submit" class="btn btn-primary" value="Вход" />
-		</div>
-	</div>
-}
+</form>

@@ -1,31 +1,38 @@
 ﻿@inject IHostingEnvironment hostEnvironment
 
-<header class="header">
-    <div class="bar top-bar">
-        <div class="bar-container">
-            <div class="row">
-                <div class="col d-flex flex-row">
-                    <div class="bar-item">
-                        <a href="/">
-                            <img src="~/images/logo-docsvision.png" alt="DocsVision" style="height:50px;" />
-                        </a>
-                    </div>
-                    <span class="pr-3"></span>
-                    <div class="bar-item">
-                        <a href="/">Сервисы мониторинга СЭД DocsVision</a>
-                    </div>
-                    
-                    <div class="ml-auto mr-auto">
-                    </div>
+<header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
+	<a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Сервисы мониторинга DocsVision">
+		<img src="~/images/logo-docsvision.png" alt="DocsVision" style="height:50px;" />
+	</a>
 
-                    @if (User.Identity.IsAuthenticated || hostEnvironment.IsDevelopment())
-                    {
-                        <div class="bar-item pull-right">
-                            <span>User info + logout</span>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="navbar-nav-scroll">
+		<ul class="navbar-nav bd-navbar-nav flex-row">
+			<li class="nav-item">
+				<a class="nav-link" href="/">Сервисы мониторинга DocsVision</a>
+			</li>
+		</ul>
+	</div>
+
+	<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+		<li class="nav-item dropdown">
+			<a class="nav-item nav-link dropdown-toggle mr-md-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-user fa-fw"></i>
+				<span>Добро пожаловать, @User.GetUserName()</span>
+			</a>
+
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li>
+					<a asp-controller="Account" asp-action="Settings" class="dropdown-item" role="menuitem">
+						<i class="fa fa-gear fa-fw"></i>Настройки
+					</a>
+				</li>
+				<li class="dropdown-divider"></li>
+				<li>
+					<a asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/" class="dropdown-item" role="menuitem">
+						<i class="fa fa-sign-out fa-fw"></i>Выход
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
 </header>
