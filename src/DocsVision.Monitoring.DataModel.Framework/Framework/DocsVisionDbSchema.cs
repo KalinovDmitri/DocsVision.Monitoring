@@ -9,6 +9,8 @@ namespace DocsVision.Monitoring.DataModel.Framework
 	{
 		public static IEnumerable<IEntityMapper> GetMappers()
 		{
+			yield return new UserMapper();
+			yield return new SessionMapper();
 			yield return new SecurityInfoMapper();
 			yield return new CardTypeMapper();
 			yield return new BaseCardMapper();
