@@ -10,36 +10,24 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
-using Microsoft.Extensions.Options;
-
 using DocsVision.Monitoring.DataModel;
 using DocsVision.Monitoring.DataModel.Framework;
 using DocsVision.Monitoring.Models;
-using DocsVision.Monitoring.Options;
 using DocsVision.Monitoring.Resources;
 
 namespace DocsVision.Monitoring.Services
 {
-	public class ActiveDirectoryAccountService : IAccountService
+	public abstract class BaseAccountService : IAccountService
 	{
-		private const string DefaultAuthenticationType = "ApplicationCookie";
-		private const string DocsVisionAdministratorsGroupName = "DocsVision Administrators";
+		protected const string DefaultAuthenticationType = "ApplicationCookie";
+		protected const string DocsVisionAdministratorsGroupName = "DocsVision Administrators";
 
-		private const string GetEmployeeIdByAccountSIDQuery = @"
-SELECT [RowID] AS [Id]
-FROM [dbo].[dvtable_{{dbc8ae9d-c1d2-4d5e-978b-339d22b32482}}]
-WHERE [AccountSID] = {0}";
+		private readonly IDocsVisionService _docsvisionService;
 
-		private readonly DocsVisionDbContext _docsvisionContext;
-		private readonly ActiveDirectoryOptions _options;
-
-		public ActiveDirectoryAccountService(DocsVisionDbContext docsvisionContext, IOptions<ActiveDirectoryOptions> options)
+		protected internal BaseAccountService(IDocsVisionService docsvisionService)
 		{
-			_docsvisionContext = docsvisionContext;
-			_options = options.Value;
+			_docsvisionService = docsvisionService;
 		}
-
-		#region IAccountService implementation
 
 		public async Task<OperationResult<ClaimsPrincipal>> AuthenticateAsync(string userName, string password)
 		{
@@ -47,9 +35,9 @@ WHERE [AccountSID] = {0}";
 
 			try
 			{
-				using (var context = new PrincipalContext(ContextType.Domain, _options.Domain, userName, password))
+				using (var context = CreateContext(userName, password))
 				{
-					var user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, userName);
+					var user = FindUserPrincipal(context, userName);
 					if (user != null)
 					{
 						var userGroups = user.GetAuthorizationGroups();
@@ -58,14 +46,15 @@ WHERE [AccountSID] = {0}";
 							return OperationResult.BadRequest(ResponseMessages.OnlyDocsVisionAdministratorsCanAccess);
 						}
 
-						Guid? employeeId = null;
+						var accountName = GetAccountName(userName);
 
-						if (user.Sid != null)
+						var employeeInfo = await _docsvisionService.GetEmployeeAsync(accountName);
+						if (employeeInfo == null)
 						{
-							employeeId = await GetEmployeeIdAsync(user.Sid.Value);
+							return OperationResult.BadRequest(ResponseMessages.UserDoesNotExistInDatabase);
 						}
 
-						var userClaims = CreateUserClaims(employeeId, user, userGroups);
+						var userClaims = CreateUserClaims(employeeInfo, user, userGroups);
 
 						var userIdentity = new ClaimsIdentity(userClaims,
 							DefaultAuthenticationType,
@@ -84,10 +73,15 @@ WHERE [AccountSID] = {0}";
 				return OperationResult.Error(exc.Message);
 			}
 		}
-		#endregion
-
-		#region Private class methods
 		
+		#region Class methods
+
+		protected abstract PrincipalContext CreateContext(string userName, string password);
+
+		protected abstract string GetAccountName(string userName);
+
+		protected abstract UserPrincipal FindUserPrincipal(PrincipalContext context, string userName);
+
 		private static bool IsDocsVisionAdministratorsGroup(Principal principal)
 		{
 			return string.Equals(principal?.Name, DocsVisionAdministratorsGroupName, StringComparison.OrdinalIgnoreCase);
@@ -99,18 +93,8 @@ WHERE [AccountSID] = {0}";
 
 			return (name != null) && name.StartsWith("DocsVision", StringComparison.OrdinalIgnoreCase);
 		}
-		
-		private async Task<Guid?> GetEmployeeIdAsync(string accountSid)
-		{
-			var employeeIdQuery = _docsvisionContext.Query<Identity>()
-				.FromSql(GetEmployeeIdByAccountSIDQuery, accountSid)
-				.Select(x => x.Id);
 
-			var employeeId = await employeeIdQuery.FirstOrDefaultAsync();
-			return employeeId;
-		}
-
-		private IEnumerable<Claim> CreateUserClaims(Guid? employeeId, UserPrincipal userPrincipal, IEnumerable<Principal> userGroups)
+		private IEnumerable<Claim> CreateUserClaims(EmployeeModel employee, UserPrincipal userPrincipal, IEnumerable<Principal> userGroups)
 		{
 			var userClaims = new List<Claim>(8);
 
@@ -119,18 +103,36 @@ WHERE [AccountSID] = {0}";
 				userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userPrincipal.Guid.Value.ToString("D"), ClaimValueTypes.String));
 			}
 
-			if (employeeId.HasValue)
-			{
-				userClaims.Add(new Claim("EmployeeId", employeeId.Value.ToString("D"), ClaimValueTypes.String));
-			}
+			userClaims.Add(new Claim(DocsVisionClaimTypes.UserID, employee.UserID.ToString("D"), ClaimValueTypes.String));
 
-			if (userPrincipal.Sid != null)
+			userClaims.Add(new Claim(DocsVisionClaimTypes.EmployeeID, employee.EmployeeID.ToString("D"), ClaimValueTypes.String));
+
+			if (employee?.AccountSID != null)
+			{
+				userClaims.Add(new Claim(ClaimTypes.Sid, employee.AccountSID, ClaimValueTypes.String));
+			}
+			else if (userPrincipal.Sid != null)
 			{
 				userClaims.Add(new Claim(ClaimTypes.Sid, userPrincipal.Sid.Value, ClaimValueTypes.String));
 			}
 
-			userClaims.Add(new Claim(ClaimTypes.Name, userPrincipal.DisplayName, ClaimValueTypes.String));
-			userClaims.Add(new Claim(ClaimTypes.WindowsAccountName, userPrincipal.SamAccountName, ClaimValueTypes.String));
+			if (employee?.DisplayString != null)
+			{
+				userClaims.Add(new Claim(ClaimTypes.Name, employee.DisplayString, ClaimValueTypes.String));
+			}
+			else if (userPrincipal.DisplayName != null)
+			{
+				userClaims.Add(new Claim(ClaimTypes.Name, userPrincipal.DisplayName, ClaimValueTypes.String));
+			}
+
+			if (employee?.SysAccountName != null)
+			{
+				userClaims.Add(new Claim(ClaimTypes.WindowsAccountName, employee.SysAccountName, ClaimValueTypes.String));
+			}
+			else if (userPrincipal.SamAccountName != null)
+			{
+				userClaims.Add(new Claim(ClaimTypes.WindowsAccountName, userPrincipal.SamAccountName, ClaimValueTypes.String));
+			}
 
 			if (userPrincipal.EmailAddress != null)
 			{
@@ -140,8 +142,10 @@ WHERE [AccountSID] = {0}";
 			foreach (var group in userGroups.Where(IsDocsVisionGroup))
 			{
 				var roleName = group.Name ?? group.DistinguishedName ?? group.DisplayName;
-
-				userClaims.Add(new Claim(ClaimTypes.Role, roleName, ClaimValueTypes.String));
+				if (roleName != null)
+				{
+					userClaims.Add(new Claim(ClaimTypes.Role, roleName, ClaimValueTypes.String));
+				}
 			}
 
 			return userClaims;

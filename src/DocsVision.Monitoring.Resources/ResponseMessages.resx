@@ -123,4 +123,7 @@
   <data name="UserDoesNotExist" xml:space="preserve">
     <value>Пользователь с указанными именем и паролем не существует</value>
   </data>
+  <data name="UserDoesNotExistInDatabase" xml:space="preserve">
+    <value>Пользователь с указанными именем отсутствует в базе данных</value>
+  </data>
 </root>

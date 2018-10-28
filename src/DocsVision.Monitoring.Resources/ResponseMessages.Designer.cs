@@ -77,5 +77,14 @@ namespace DocsVision.Monitoring.Resources {
                 return ResourceManager.GetString("UserDoesNotExist", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пользователь с указанными именем отсутствует в базе данных.
+        /// </summary>
+        public static string UserDoesNotExistInDatabase {
+            get {
+                return ResourceManager.GetString("UserDoesNotExistInDatabase", resourceCulture);
+            }
+        }
     }
 }

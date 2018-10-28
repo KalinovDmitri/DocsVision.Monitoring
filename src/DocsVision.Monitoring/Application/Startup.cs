@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,7 +56,18 @@ namespace DocsVision.Monitoring
 				.AddCookie(ConfigureCookieAuthentication);
 
 			services
-				.AddScoped<IAccountService, ActiveDirectoryAccountService>();
+				.AddScoped<IDocsVisionService, DocsVisionService>();
+
+			if (Debugger.IsAttached || _hostingEnvironment.IsDevelopment())
+			{
+				services
+					.AddScoped<IAccountService, LocalAccountService>();
+			}
+			else
+			{
+				services
+					.AddScoped<IAccountService, DomainAccountService>();
+			}
 
 			services
 				.AddMvc()

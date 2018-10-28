@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.DataModel.Framework.Tests", "tests\DocsVision.Monitoring.DataModel.Framework.Tests\DocsVision.Monitoring.DataModel.Framework.Tests.csproj", "{FAFC7718-D232-4BA5-8486-B30788CED2FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Resources", "src\DocsVision.Monitoring.Resources\DocsVision.Monitoring.Resources.csproj", "{BB1589DD-0C19-44FC-A94D-68D8DA631414}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Resources", "src\DocsVision.Monitoring.Resources\DocsVision.Monitoring.Resources.csproj", "{BB1589DD-0C19-44FC-A94D-68D8DA631414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Common", "src\DocsVision.Monitoring.Common\DocsVision.Monitoring.Common.csproj", "{35FB7B37-ACCC-4DEA-AE55-22777FF08159}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
 		{BB1589DD-0C19-44FC-A94D-68D8DA631414} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1AB6AED-7251-4723-B84F-200BB09584D2}
