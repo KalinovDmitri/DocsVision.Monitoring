@@ -78,6 +78,33 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 
 			Console.WriteLine(JsonConvert.SerializeObject(process, _serializerSettings));
 		}
+
+		[TestMethod]
+		public async Task IsGroupingByDateExecutesSuccessfully()
+		{
+			var sessionsQuery = _context.Set<Session>()
+				.Where(x => EF.Functions.DateDiffDay(x.LastAccessTime, DateTime.Now) <= 10)
+				.GroupBy(x => new { x.LastAccessTime.Date, x.UserID })
+				.Select(x => new
+				{
+					x.Key.Date,
+					x.Key.UserID
+				})
+				.GroupBy(x => x.Date)
+				.Select(x => new
+				{
+					Date = x.Key,
+					Count = x.Count()
+				})
+				.OrderBy(x => x.Date);
+
+			var sessions = await sessionsQuery.ToListAsync();
+
+			Assert.IsNotNull(sessions);
+			Assert.IsTrue(sessions.Count >= 0);
+
+			Console.WriteLine(JsonConvert.SerializeObject(sessions, _serializerSettings));
+		}
 		#endregion
 
 		#region Initialize / cleanup methods
