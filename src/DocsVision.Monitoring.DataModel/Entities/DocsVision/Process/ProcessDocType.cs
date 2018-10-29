@@ -2,7 +2,7 @@
 
 namespace DocsVision.Monitoring.DataModel
 {
-	public class ProcessDocTypes : BaseCardSectionRow
+	public class ProcessDocType : BaseCardSectionRow
 	{
 		public Guid? TypeID { get; set; }
 

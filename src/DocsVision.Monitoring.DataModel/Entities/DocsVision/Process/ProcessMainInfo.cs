@@ -103,6 +103,6 @@ namespace DocsVision.Monitoring.DataModel
 
 		public virtual Process Template { get; set; }
 
-		public virtual ICollection<ProcessDocTypes> DocTypes { get; set; }
+		public virtual ICollection<ProcessDocType> DocTypes { get; set; }
 	}
 }

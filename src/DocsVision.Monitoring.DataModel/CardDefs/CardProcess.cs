@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DocsVision.Monitoring.DataModel
+namespace DocsVision.Monitoring.DataModel.CardDefs
 {
 	public static class CardProcess
 	{
@@ -13,6 +13,13 @@ namespace DocsVision.Monitoring.DataModel
 			public static readonly Guid ID = new Guid("0EF6BCCA-7A09-4027-A3A2-D2EEECA1BF4D");
 
 			public const string Alias = nameof(CardProcess.MainInfo);
+		}
+
+		public static class DocType
+		{
+			public static readonly Guid ID = new Guid("989E8297-990F-43F8-9685-54DF1C3FBB79");
+
+			public const string Alias = nameof(CardProcess.DocType);
 		}
 
 		public static class Log

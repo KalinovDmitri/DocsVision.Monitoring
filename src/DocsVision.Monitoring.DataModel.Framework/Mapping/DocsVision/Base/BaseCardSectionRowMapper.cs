@@ -28,6 +28,10 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 		{
 			base.MapEntity(entityBuilder);
 
+			entityBuilder.Property(x => x.Id)
+				.HasDefaultValueSql("NEWSEQUENTIALID()")
+				.ValueGeneratedOnAdd();
+
 			entityBuilder.Property(x => x.SysRowTimestamp)
 				.IsRowVersion();
 
