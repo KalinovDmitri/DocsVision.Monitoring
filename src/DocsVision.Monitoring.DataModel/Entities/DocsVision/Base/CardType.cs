@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace DocsVision.Monitoring.DataModel
 {
-	public class CardType : BaseEntity<Guid>
+	public class CardType
 	{
+		public Guid CardTypeID { get; set; }
+
 		public string Alias { get; set; }
 
 		public int? Version { get; set; }

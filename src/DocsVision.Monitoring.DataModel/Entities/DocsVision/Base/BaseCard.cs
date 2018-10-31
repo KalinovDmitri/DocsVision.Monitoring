@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace DocsVision.Monitoring.DataModel
 {
-	public abstract class BaseCard : BaseEntity<Guid>
+	public abstract class BaseCard
 	{
+		public Guid InstanceID { get; set; }
+
 		public byte[] Timestamp { get; set; }
 
 		public Guid? CardTypeID { get; set; }
@@ -28,7 +30,9 @@ namespace DocsVision.Monitoring.DataModel
 		public string Barcode { get; set; }
 
 		public Guid? IconID { get; set; }
-		
+
+		public virtual BaseCardDates Dates { get; set; }
+
 		public virtual CardType Type { get; set; }
 
 		public virtual SecurityInfo Security { get; set; }
