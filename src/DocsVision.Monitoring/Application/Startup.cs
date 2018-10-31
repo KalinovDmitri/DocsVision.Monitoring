@@ -10,9 +10,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.SqlServer;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
+using DocsVision.Monitoring.DataModel.Framework;
 
 namespace DocsVision.Monitoring
 {
@@ -32,6 +38,12 @@ namespace DocsVision.Monitoring
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services
+				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
+				.AddDbContext<MonitoringDbContext>(ConfigureMonitoringContext, optionsLifetime: ServiceLifetime.Singleton);
+
+			services
 				.AddMvc()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -41,29 +53,63 @@ namespace DocsVision.Monitoring
 		
 		public void Configure(IApplicationBuilder app)
 		{
+			MigrateDatabase(app.ApplicationServices);
+
+			var systemConnectionString = _configuration.GetConnectionString("System");
+
 			if (_hostingEnvironment.IsDevelopment())
 			{
+				_loggerFactory.AddDatabase(LogLevel.Debug, systemConnectionString);
 				_loggerFactory.AddConsole(_configuration.GetSection("Logging"));
 				_loggerFactory.AddDebug(LogLevel.Debug);
-				_loggerFactory.AddDatabase(LogLevel.Debug, _configuration.GetConnectionString("Monitoring"));
 			}
 			else
 			{
-				_loggerFactory.AddDatabase(LogLevel.Information, _configuration.GetConnectionString("Monitoring"));
+				_loggerFactory.AddDatabase(LogLevel.Information, systemConnectionString);
 			}
 
 			if (_hostingEnvironment.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseHsts();
+				app.UseDatabaseErrorPage();
 			}
 
-			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseMvc(BuildRoutes);
+		}
+
+		private void ConfigureDocsVisionContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			var connectionString = _configuration.GetConnectionString("DocsVision");
+
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
+		}
+
+		private void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
+		{
+			var connectionString = _configuration.GetConnectionString("System");
+
+			optionsBuilder.UseSqlServer(connectionString, builder =>
+			{
+				builder
+					.CommandTimeout(60)
+					.UseRelationalNulls();
+			});
+		}
+
+		private void MigrateDatabase(IServiceProvider services)
+		{
+			using (var scope = services.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetRequiredService<MonitoringDbContext>();
+
+				context.Database.Migrate();
+			}
 		}
 
 		private void BuildRoutes(IRouteBuilder routeBuilder)

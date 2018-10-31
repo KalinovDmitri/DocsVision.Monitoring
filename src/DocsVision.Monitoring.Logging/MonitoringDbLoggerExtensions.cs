@@ -15,7 +15,24 @@ namespace Microsoft.Extensions.Logging
 
 		public static ILoggerFactory AddDatabase(this ILoggerFactory factory, LogLevel minLevel, string connectionString)
 		{
-			return AddDatabase(factory, (_, level) => level >= minLevel, connectionString);
+			var filter = new LevelFilter(minLevel);
+
+			return AddDatabase(factory, filter.IsEnabled, connectionString);
+		}
+
+		internal class LevelFilter
+		{
+			private readonly LogLevel _minLevel;
+
+			internal LevelFilter(LogLevel minLevel)
+			{
+				_minLevel = minLevel;
+			}
+
+			public bool IsEnabled(string categoryName, LogLevel logLevel)
+			{
+				return logLevel >= _minLevel;
+			}
 		}
 	}
 }

@@ -2,6 +2,8 @@
 
 using Microsoft.Extensions.Logging;
 
+using DocsVision.Monitoring.DataModel;
+
 namespace DocsVision.Monitoring.Logging
 {
 	public class MonitoringDbLogger : ILogger
@@ -38,6 +40,14 @@ namespace DocsVision.Monitoring.Logging
 
 			if (message.Length > MaxMessageLength)
 				message = message.Substring(0, MaxMessageLength);
+
+			var logRecord = new EventLog
+			{
+				EventId = eventId.Id,
+				Level = logLevel.ToString(),
+				Message = message
+			};
+			_loggerImpl.Enqueue(logRecord);
 		}
 
 		public bool IsEnabled(LogLevel logLevel)
