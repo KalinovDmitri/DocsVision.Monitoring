@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.DataModel.Framework.Tests", "tests\DocsVision.Monitoring.DataModel.Framework.Tests\DocsVision.Monitoring.DataModel.Framework.Tests.csproj", "{FAFC7718-D232-4BA5-8486-B30788CED2FE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Resources", "src\DocsVision.Monitoring.Resources\DocsVision.Monitoring.Resources.csproj", "{BB1589DD-0C19-44FC-A94D-68D8DA631414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Common", "src\DocsVision.Monitoring.Common\DocsVision.Monitoring.Common.csproj", "{35FB7B37-ACCC-4DEA-AE55-22777FF08159}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Services.Tests", "tests\DocsVision.Monitoring.Services.Tests\DocsVision.Monitoring.Services.Tests.csproj", "{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Tests.Common", "tests\DocsVision.Monitoring.Tests.Common\DocsVision.Monitoring.Tests.Common.csproj", "{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B}"
@@ -53,6 +57,14 @@ Global
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1589DD-0C19-44FC-A94D-68D8DA631414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -72,6 +84,8 @@ Global
 		{815EB101-6DF9-4324-AA26-89119DC684BE} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{FAFC7718-D232-4BA5-8486-B30788CED2FE} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
+		{BB1589DD-0C19-44FC-A94D-68D8DA631414} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
+		{35FB7B37-ACCC-4DEA-AE55-22777FF08159} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{F5122DB7-0B08-49E5-B5FE-052CC8EAEE4C} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
 		{0D0A22B7-7A9D-43D1-BB8D-2CF6122A657B} = {7276AE75-3AD3-4D7B-9253-99CB2163BCB1}
 	EndGlobalSection

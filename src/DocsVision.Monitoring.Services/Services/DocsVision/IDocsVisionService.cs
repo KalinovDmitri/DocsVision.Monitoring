@@ -8,6 +8,8 @@ namespace DocsVision.Monitoring.Services
 {
 	public interface IDocsVisionService : IApplicationService
 	{
+		Task<EmployeeModel> GetEmployeeAsync(string accountName);
+
 		Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, TimeSpan creationSpan);
 	}
 }

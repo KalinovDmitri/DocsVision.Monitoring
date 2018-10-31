@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -31,6 +32,7 @@ using Hangfire.SqlServer;
 using DocsVision.Monitoring.DataModel.Framework;
 using DocsVision.Monitoring.Extensions;
 using DocsVision.Monitoring.Filters;
+using DocsVision.Monitoring.Options;
 using DocsVision.Monitoring.Services;
 
 namespace DocsVision.Monitoring
@@ -51,6 +53,10 @@ namespace DocsVision.Monitoring
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services
+				.AddOptions()
+				.Configure<ActiveDirectoryOptions>(_configuration.GetSection("ActiveDirectory"));
+
+			services
 				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
 
 			services
@@ -66,7 +72,18 @@ namespace DocsVision.Monitoring
 				.AddCookie(ConfigureCookieAuthentication);
 
 			services.AddHangfire(ConfigureHangfire);
-			
+
+			if (Debugger.IsAttached || _hostingEnvironment.IsDevelopment())
+			{
+				services
+					.AddScoped<IAccountService, LocalAccountService>();
+			}
+			else
+			{
+				services
+					.AddScoped<IAccountService, DomainAccountService>();
+			}
+
 			services
 				.AddMvc()
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
