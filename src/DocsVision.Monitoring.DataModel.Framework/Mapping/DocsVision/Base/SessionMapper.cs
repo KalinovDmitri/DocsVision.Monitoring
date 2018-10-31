@@ -6,14 +6,24 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public sealed class SessionMapper : DirectTableEntityMapper<Guid, Session>
+	public sealed class SessionMapper : DocsVisionDirectEntityMapper<Session>
 	{
-		public SessionMapper() : base("dvsys_sessions", "SessionID") { }
+		public SessionMapper() : base("dvsys_sessions") { }
+
+		protected override void MapPrimaryKey(EntityTypeBuilder<Session> entityBuilder)
+		{
+			entityBuilder.Property(x => x.SessionID)
+				.IsRequired()
+				.HasDefaultValueSql(DocsVisionMappingConstants.NewSequentialID)
+				.ValueGeneratedOnAdd();
+
+			entityBuilder.HasKey(x => x.SessionID)
+				.ForSqlServerIsClustered(false)
+				.HasName("dvsys_sessions_pk_sessionid");
+		}
 
 		protected override void MapEntity(EntityTypeBuilder<Session> entityBuilder)
 		{
-			base.MapEntity(entityBuilder);
-
 			entityBuilder.Property(x => x.UserID)
 				.IsRequired();
 
@@ -49,16 +59,18 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.IsRequired();
 
 			entityBuilder.Property(x => x.Offline)
-				.IsRequired();
+				.IsRequired()
+				.HasDefaultValueSql("0")
+				.ValueGeneratedOnAdd();
 
-			entityBuilder.HasIndex(x => new { x.LastAccessTime, x.Id })
+			entityBuilder.HasIndex(x => new { x.LastAccessTime, x.SessionID })
 				.ForSqlServerIsClustered(false)
 				.HasName("dvsys_sessions_idx_lastaccesstime");
 
 			entityBuilder.HasOne(x => x.SessionUser)
 				.WithMany()
 				.HasForeignKey(x => x.UserID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.UserID)
 				.HasConstraintName("dvsys_sessions_fk_userid");
 		}
 	}

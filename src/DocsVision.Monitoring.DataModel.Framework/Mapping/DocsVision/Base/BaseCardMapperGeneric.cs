@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public abstract class BaseCardMapper<TCard> : DirectTableEntityMapper<Guid, TCard> where TCard : BaseCard
+	public abstract class BaseCardMapper<TCard> : DocsVisionDirectEntityMapper<TCard> where TCard : BaseCard
 	{
 		protected readonly Guid _cardTypeId;
 
-		protected internal BaseCardMapper(Guid cardTypeId) : base("dvsys_instances", "InstanceID")
+		protected internal BaseCardMapper(Guid cardTypeId) : base("dvsys_instances")
 		{
 			if (cardTypeId == Guid.Empty)
 			{
@@ -33,5 +33,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 			MapEntity(entityBuilder);
 		}
+
+		protected override sealed void MapPrimaryKey(EntityTypeBuilder<TCard> entityBuilder) { }
 	}
 }

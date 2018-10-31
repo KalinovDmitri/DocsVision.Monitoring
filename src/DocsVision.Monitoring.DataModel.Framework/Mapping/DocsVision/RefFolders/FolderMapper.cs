@@ -57,18 +57,18 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.HasMaxLength(128);
 
 			entityBuilder.Property(x => x.NameUID)
-				.HasDefaultValueSql("NEWID()")
+				.HasDefaultValueSql(DocsVisionMappingConstants.NewID)
 				.ValueGeneratedOnAdd();
 
 			entityBuilder.HasOne(x => x.ParentFolder)
 				.WithMany()
 				.HasForeignKey(x => x.ParentTreeRowID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.ID)
 				.HasConstraintName("dvsys_folderscard_folders_fk_sdid");
 
 			entityBuilder.HasIndex(x => x.ParentTreeRowID)

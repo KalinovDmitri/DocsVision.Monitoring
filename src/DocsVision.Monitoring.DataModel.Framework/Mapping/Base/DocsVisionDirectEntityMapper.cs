@@ -2,15 +2,14 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public abstract class DirectTableEntityMapper<TKey, TEntity> : BaseEntityMapper<TKey, TEntity> where TKey : struct where TEntity : BaseEntity<TKey>
+	public abstract class DocsVisionDirectEntityMapper<TEntity> : DocsVisionEntityMapper<TEntity> where TEntity : DocsVisionEntity
 	{
 		protected readonly string _tableName;
 
-		public DirectTableEntityMapper(string tableName) : base()
+		protected internal DocsVisionDirectEntityMapper(string tableName) : base()
 		{
 			if (string.IsNullOrEmpty(tableName))
 			{
@@ -20,6 +19,6 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			_tableName = tableName;
 		}
 
-		protected override sealed string MakeTableName() => _tableName;
+		protected override string MakeTableName() => _tableName;
 	}
 }

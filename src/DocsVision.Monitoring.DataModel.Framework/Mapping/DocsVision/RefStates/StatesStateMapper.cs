@@ -26,7 +26,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasMany(x => x.StateNames)
 				.WithOne()
 				.HasForeignKey(x => x.ParentRowID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasIndex(x => x.ParentRowID)
 				.ForSqlServerIsClustered(true)

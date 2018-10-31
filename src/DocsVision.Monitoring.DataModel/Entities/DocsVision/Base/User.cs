@@ -2,8 +2,10 @@
 
 namespace DocsVision.Monitoring.DataModel
 {
-	public class User : BaseEntity<Guid>
+	public class User : DocsVisionEntity
 	{
+		public Guid UserID { get; set; }
+
 		public byte[] Timestamp { get; set; }
 
 		public string AccountName { get; set; }

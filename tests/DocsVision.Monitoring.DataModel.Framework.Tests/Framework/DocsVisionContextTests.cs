@@ -33,7 +33,7 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 				.OrderByDescending(x => x.Dates.CreationDateTime)
 				.Select(x => new
 				{
-					InstanceID = x.Id,
+					x.InstanceID,
 					x.Description,
 					x.SDID,
 					SystemInfo = (x.System != null) ? new
@@ -62,7 +62,7 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 				.Include(x => x.MainInfo)
 				.ThenInclude(x => x.DocTypes)
 				.Where(x => x.MainInfo.DocTypes.Count > 0)
-				.Join(datesQuery, x => x.Id, y => y.Id, (x, y) => new
+				.Join(datesQuery, x => x.InstanceID, y => y.InstanceID, (x, y) => new
 				{
 					Process = x,
 					y.CreationDateTime,

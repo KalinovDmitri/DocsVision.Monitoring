@@ -5,21 +5,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public sealed class CardTypeMapper : DirectTableEntityMapper<Guid, CardType>
+	public sealed class CardTypeMapper : DocsVisionDirectEntityMapper<CardType>
 	{
-		public CardTypeMapper() : base("dvsys_carddefs", "CardTypeID") { }
+		public CardTypeMapper() : base("dvsys_carddefs") { }
 
 		protected override void MapPrimaryKey(EntityTypeBuilder<CardType> entityBuilder)
 		{
-			entityBuilder.HasKey(x => x.Id)
-				.HasName(MakePrimaryKeyName())
-				.ForSqlServerIsClustered(true);
+			entityBuilder.Property(x => x.CardTypeID)
+				.IsRequired();
+
+			entityBuilder.HasKey(x => x.CardTypeID)
+				.ForSqlServerIsClustered(true)
+				.HasName("dvsys_carddefs_pk_cardtypeid");
 		}
 
 		protected override void MapEntity(EntityTypeBuilder<CardType> entityBuilder)
 		{
-			base.MapEntity(entityBuilder);
-
 			entityBuilder.Property(x => x.Alias)
 				.IsUnicode(false)
 				.HasMaxLength(64);
@@ -48,7 +49,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.ID)
 				.HasConstraintName("dvsys_carddefs_fk_sdid");
 		}
 	}

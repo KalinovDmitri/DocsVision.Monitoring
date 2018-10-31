@@ -2,8 +2,10 @@
 
 namespace DocsVision.Monitoring.DataModel
 {
-	public abstract class BaseCardSectionRow : BaseEntity<Guid>
+	public abstract class BaseCardSectionRow : DocsVisionEntity
 	{
+		public Guid RowID { get; set; }
+
 		public byte[] SysRowTimestamp { get; set; }
 
 		public Guid OwnServerID { get; set; }

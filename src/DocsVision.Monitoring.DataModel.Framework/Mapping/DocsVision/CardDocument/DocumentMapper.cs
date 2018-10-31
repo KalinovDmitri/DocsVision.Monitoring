@@ -13,17 +13,15 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 		protected override void MapEntity(EntityTypeBuilder<TDocument> entityBuilder)
 		{
-			base.MapEntity(entityBuilder);
-
 			entityBuilder.HasOne(x => x.MainInfo)
 				.WithOne()
 				.HasForeignKey<DocumentMainInfo>(x => x.InstanceID)
-				.HasPrincipalKey<Document>(x => x.Id);
+				.HasPrincipalKey<Document>(x => x.InstanceID);
 
 			entityBuilder.HasOne(x => x.System)
 				.WithOne()
 				.HasForeignKey<DocumentSystemInfo>(x => x.InstanceID)
-				.HasPrincipalKey<Document>(x => x.Id);
+				.HasPrincipalKey<Document>(x => x.InstanceID);
 		}
 	}
 

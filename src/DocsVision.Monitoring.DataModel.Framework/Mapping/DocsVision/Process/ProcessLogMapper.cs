@@ -10,14 +10,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	public sealed class ProcessLogMapper : BaseCardSectionRowMapper<ProcessLog>
 	{
 		public ProcessLogMapper() : base(CardProcess.Log.ID) { }
-
-		protected override void MapPrimaryKey(EntityTypeBuilder<ProcessLog> entityBuilder)
-		{
-			entityBuilder.HasKey(x => x.Id)
-				.ForSqlServerIsClustered(false)
-				.HasName("dvsys_process_log_pk_rowid");
-		}
-
+		
 		protected override void MapEntity(EntityTypeBuilder<ProcessLog> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -31,8 +24,8 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.HasMaxLength(128);
 
 			entityBuilder.Property(x => x.MessageDate)
-				.HasColumnType("DATETIME")
-				.HasDefaultValueSql("GETDATE()")
+				.HasColumnType(DocsVisionMappingConstants.DateTimeDefaultType)
+				.HasDefaultValueSql(DocsVisionMappingConstants.DateTimeDefaultValue)
 				.ValueGeneratedOnAdd();
 
 			entityBuilder.Property(x => x.Action)

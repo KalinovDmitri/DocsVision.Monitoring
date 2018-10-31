@@ -15,11 +15,11 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 	internal static class ServiceProviderFactory
 	{
 		private const string MonitoringConnectionString =
-			"Data Source=(local);Initial Catalog=DocsVisionMonitoring;User ID=sa;Password=saionara;Connect Timeout=30;" +
+			"Data Source=(local)\\MSSQLSERVER2017;Initial Catalog=DocsVisionMonitoring;User ID=sa;Password=saionara;Connect Timeout=30;" +
 			"Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 		private const string DocsVisionConnectionString =
-			"Data Source=(local);Initial Catalog=DocsVision5_MIH;User ID=sa;Password=saionara;Connect Timeout=30;" +
+			"Data Source=(local)\\MSSQLSERVER2017;Initial Catalog=DocsVision5_MIH;User ID=sa;Password=saionara;Connect Timeout=30;" +
 			"Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 		
 		public static IServiceProvider CreateProvider()

@@ -13,17 +13,15 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 		protected override void MapEntity(EntityTypeBuilder<Process> entityBuilder)
 		{
-			base.MapEntity(entityBuilder);
-
 			entityBuilder.HasOne(x => x.MainInfo)
 				.WithOne()
 				.HasForeignKey<ProcessMainInfo>(x => x.InstanceID)
-				.HasPrincipalKey<Process>(x => x.Id);
+				.HasPrincipalKey<Process>(x => x.InstanceID);
 
 			entityBuilder.HasMany(x => x.LogRecords)
 				.WithOne()
 				.HasForeignKey(x => x.InstanceID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.InstanceID);
 		}
 	}
 }

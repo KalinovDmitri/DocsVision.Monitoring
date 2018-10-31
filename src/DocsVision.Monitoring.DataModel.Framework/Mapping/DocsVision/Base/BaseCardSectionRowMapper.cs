@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public abstract class BaseCardSectionRowMapper<TSectionRow> : BaseEntityMapper<Guid, TSectionRow> where TSectionRow : BaseCardSectionRow
+	public abstract class BaseCardSectionRowMapper<TSectionRow> : DocsVisionEntityMapper<TSectionRow> where TSectionRow : BaseCardSectionRow
 	{
 		protected readonly Guid _sectionTypeId;
 
-		protected internal BaseCardSectionRowMapper(Guid sectionTypeId) : base("RowID")
+		protected internal BaseCardSectionRowMapper(Guid sectionTypeId) : base()
 		{
 			if (sectionTypeId == Guid.Empty)
 			{
@@ -24,14 +24,19 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			return string.Format("dvtable_{{{0}}}", _sectionTypeId);
 		}
 
-		protected override void MapEntity(EntityTypeBuilder<TSectionRow> entityBuilder)
+		protected override void MapPrimaryKey(EntityTypeBuilder<TSectionRow> entityBuilder)
 		{
-			base.MapEntity(entityBuilder);
-
-			entityBuilder.Property(x => x.Id)
-				.HasDefaultValueSql("NEWSEQUENTIALID()")
+			entityBuilder.Property(x => x.RowID)
+				.IsRequired()
+				.HasDefaultValueSql(DocsVisionMappingConstants.NewSequentialID)
 				.ValueGeneratedOnAdd();
 
+			entityBuilder.HasKey(x => x.RowID)
+				.ForSqlServerIsClustered(false);
+		}
+
+		protected override void MapEntity(EntityTypeBuilder<TSectionRow> entityBuilder)
+		{
 			entityBuilder.Property(x => x.SysRowTimestamp)
 				.IsRowVersion();
 

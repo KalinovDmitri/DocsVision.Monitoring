@@ -2,8 +2,10 @@
 
 namespace DocsVision.Monitoring.DataModel
 {
-	public class Session : BaseEntity<Guid>
+	public class Session : DocsVisionEntity
 	{
+		public Guid SessionID { get; set; }
+
 		public Guid UserID { get; set; }
 
 		public Guid AppID { get; set; }

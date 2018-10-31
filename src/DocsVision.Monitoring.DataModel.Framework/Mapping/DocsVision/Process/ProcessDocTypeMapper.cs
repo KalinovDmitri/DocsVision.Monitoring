@@ -10,14 +10,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	public sealed class ProcessDocTypeMapper : BaseCardSectionRowMapper<ProcessDocType>
 	{
 		public ProcessDocTypeMapper() : base(CardProcess.DocType.ID) { }
-
-		protected override void MapPrimaryKey(EntityTypeBuilder<ProcessDocType> entityBuilder)
-		{
-			entityBuilder.HasKey(x => x.Id)
-				.ForSqlServerIsClustered(false)
-				.HasName("dvsys_process_doctypes_pk_rowid");
-		}
-
+		
 		protected override void MapEntity(EntityTypeBuilder<ProcessDocType> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -28,12 +21,12 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.Type)
 				.WithMany()
 				.HasForeignKey(x => x.TypeID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.CardTypeID);
 
 			entityBuilder.HasOne(x => x.Owner)
 				.WithMany(x => x.DocTypes)
 				.HasForeignKey(x => x.ParentRowID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.RowID)
 				.HasConstraintName("dvsys_process_doctypes_fk_parentrowid");
 
 			entityBuilder.HasIndex(x => new { x.InstanceID, x.ParentRowID })

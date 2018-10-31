@@ -11,14 +11,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	public sealed class StatesStateNameMapper : BaseCardSectionRowMapper<StatesStateName>
 	{
 		public StatesStateNameMapper() : base(RefStates.StateNames.ID) { }
-
-		protected override void MapPrimaryKey(EntityTypeBuilder<StatesStateName> entityBuilder)
-		{
-			entityBuilder.HasKey(x => x.Id)
-				.ForSqlServerIsClustered(false)
-				.HasName("dvsys_refstates_statenames_pk_rowid");
-		}
-
+		
 		protected override void MapEntity(EntityTypeBuilder<StatesStateName> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -32,7 +25,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.ParentState)
 				.WithMany()
 				.HasForeignKey(x => x.ParentRowID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.RowID)
 				.OnDelete(DeleteBehavior.Cascade)
 				.HasConstraintName("dvsys_refstates_statenames_fk_parentrowid");
 

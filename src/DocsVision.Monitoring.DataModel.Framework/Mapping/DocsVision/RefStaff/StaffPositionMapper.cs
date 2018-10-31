@@ -11,14 +11,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	public sealed class StaffPositionMapper : BaseCardSectionRowMapper<StaffPosition>
 	{
 		public StaffPositionMapper() : base(RefStaff.Positions.ID) { }
-
-		protected override void MapPrimaryKey(EntityTypeBuilder<StaffPosition> entityBuilder)
-		{
-			entityBuilder.HasKey(x => x.Id)
-				.ForSqlServerIsClustered(false)
-				.HasName("dvsys_refstaff_positions_pk_rowid");
-		}
-
+		
 		protected override void MapEntity(EntityTypeBuilder<StaffPosition> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -62,7 +55,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.HasMaxLength(64);
 
 			entityBuilder.Property(x => x.NameUID)
-				.HasDefaultValueSql("NEWID()")
+				.HasDefaultValueSql(DocsVisionMappingConstants.NewID)
 				.ValueGeneratedOnAdd();
 
 			entityBuilder.HasIndex(x => new { x.Name, x.NameUID })
