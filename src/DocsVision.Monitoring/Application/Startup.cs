@@ -43,6 +43,17 @@ namespace DocsVision.Monitoring
 		{
 			if (_hostingEnvironment.IsDevelopment())
 			{
+				_loggerFactory.AddConsole(_configuration.GetSection("Logging"));
+				_loggerFactory.AddDebug(LogLevel.Debug);
+				_loggerFactory.AddDatabase(LogLevel.Debug, _configuration.GetConnectionString("Monitoring"));
+			}
+			else
+			{
+				_loggerFactory.AddDatabase(LogLevel.Information, _configuration.GetConnectionString("Monitoring"));
+			}
+
+			if (_hostingEnvironment.IsDevelopment())
+			{
 				app.UseDeveloperExceptionPage();
 			}
 			else

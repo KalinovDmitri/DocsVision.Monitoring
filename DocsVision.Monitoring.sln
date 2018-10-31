@@ -7,15 +7,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A691A6C-6E5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7276AE75-3AD3-4D7B-9253-99CB2163BCB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring", "src\DocsVision.Monitoring\DocsVision.Monitoring.csproj", "{D9781340-CFC1-44CF-AB23-E9B16596F817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring", "src\DocsVision.Monitoring\DocsVision.Monitoring.csproj", "{D9781340-CFC1-44CF-AB23-E9B16596F817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.DataModel", "src\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj", "{B24E671D-0C71-4DBF-B821-637049A82611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.DataModel", "src\DocsVision.Monitoring.DataModel\DocsVision.Monitoring.DataModel.csproj", "{B24E671D-0C71-4DBF-B821-637049A82611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.DataModel.Framework", "src\DocsVision.Monitoring.DataModel.Framework\DocsVision.Monitoring.DataModel.Framework.csproj", "{C898B879-DA20-4380-8DA9-D9E7747220D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.DataModel.Framework", "src\DocsVision.Monitoring.DataModel.Framework\DocsVision.Monitoring.DataModel.Framework.csproj", "{C898B879-DA20-4380-8DA9-D9E7747220D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Models", "src\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj", "{815EB101-6DF9-4324-AA26-89119DC684BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Models", "src\DocsVision.Monitoring.Models\DocsVision.Monitoring.Models.csproj", "{815EB101-6DF9-4324-AA26-89119DC684BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Services", "src\DocsVision.Monitoring.Services\DocsVision.Monitoring.Services.csproj", "{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocsVision.Monitoring.Services", "src\DocsVision.Monitoring.Services\DocsVision.Monitoring.Services.csproj", "{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocsVision.Monitoring.Logging", "src\DocsVision.Monitoring.Logging\DocsVision.Monitoring.Logging.csproj", "{BD464050-4262-436C-A5F4-EB1DF478108F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD464050-4262-436C-A5F4-EB1DF478108F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD464050-4262-436C-A5F4-EB1DF478108F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD464050-4262-436C-A5F4-EB1DF478108F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD464050-4262-436C-A5F4-EB1DF478108F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{C898B879-DA20-4380-8DA9-D9E7747220D7} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{815EB101-6DF9-4324-AA26-89119DC684BE} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 		{AE876E6D-AB46-4EA1-8A69-C2497D5F6106} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
+		{BD464050-4262-436C-A5F4-EB1DF478108F} = {1A691A6C-6E55-4850-90D0-0764FCE169CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C1AB6AED-7251-4723-B84F-200BB09584D2}
