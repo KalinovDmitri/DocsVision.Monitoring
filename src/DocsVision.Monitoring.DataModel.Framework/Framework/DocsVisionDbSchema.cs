@@ -26,6 +26,10 @@ namespace DocsVision.Monitoring.DataModel.Framework
 			yield return new DocumentMapper();
 			yield return new DocumentMainInfoMapper();
 			yield return new DocumentSystemInfoMapper();
+			yield return new ProcessMapper();
+			yield return new ProcessMainInfoMapper();
+			yield return new ProcessDocTypeMapper();
+			yield return new ProcessLogMapper();
 			yield break;
 		}
 	}

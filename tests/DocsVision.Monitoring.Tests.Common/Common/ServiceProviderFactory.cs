@@ -18,15 +18,13 @@ namespace DocsVision.Monitoring.Tests.Common
 	public static class ServiceProviderFactory
 	{
 		private const string MonitoringConnectionString =
-			"Data Source=(local);Initial Catalog=DocsVisionMonitoring;User ID=sa;Password=saionara;Connect Timeout=30;" +
+			"Data Source=(local)\\MSSQLSERVER2017;Initial Catalog=DocsVisionMonitoring;User ID=sa;Password=saionara;Connect Timeout=30;" +
 			"Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
 		private const string DocsVisionConnectionString =
-			"Data Source=(local);Initial Catalog=DocsVision5_MIH;User ID=sa;Password=saionara;Connect Timeout=30;" +
+			"Data Source=(local)\\MSSQLSERVER2017;Initial Catalog=DocsVision5_MIH;User ID=sa;Password=saionara;Connect Timeout=30;" +
 			"Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-		private static ILoggerFactory _loggerFactory;
-
+		
 		public static IServiceProvider CreateProvider()
 		{
 			var services = new ServiceCollection();
@@ -72,11 +70,12 @@ namespace DocsVision.Monitoring.Tests.Common
 		{
 			optionsBuilder
 				.EnableSensitiveDataLogging()
-				.UseSqlServer(connectionString,
-					(sqlOptions) =>
-					{
-						sqlOptions.CommandTimeout(30).UseRelationalNulls();
-					});
+				.UseSqlServer(connectionString, ConfigureSqlServerOptions);
+		}
+
+		private static void ConfigureSqlServerOptions(SqlServerDbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.CommandTimeout(30).UseRelationalNulls();
 		}
 	}
 }

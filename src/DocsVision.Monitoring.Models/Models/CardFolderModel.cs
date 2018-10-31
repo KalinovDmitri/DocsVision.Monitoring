@@ -6,6 +6,8 @@ namespace DocsVision.Monitoring.Models
 	{
 		public Guid CardID { get; set; }
 
+		public string Name { get; set; }
+
 		public string Description { get; set; }
 
 		public Guid FolderID { get; set; }

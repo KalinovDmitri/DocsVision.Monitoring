@@ -19,12 +19,12 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.CardKind)
 				.WithMany()
 				.HasForeignKey(x => x.Kind)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.CardState)
 				.WithMany()
 				.HasForeignKey(x => x.State)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 		}
 	}
 }

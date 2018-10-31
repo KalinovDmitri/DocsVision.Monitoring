@@ -10,9 +10,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	public sealed class KindsCardKindMapper : BaseCardSectionRowMapper<KindsCardKind>
 	{
 		public KindsCardKindMapper() : base(RefKinds.CardKinds.ID) { }
-
-		protected override string MakePrimaryKeyName() => "dvsys_refkinds_cardkinds_pk_rowid";
-
+		
 		protected override void MapEntity(EntityTypeBuilder<KindsCardKind> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -39,7 +37,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.ID)
 				.HasConstraintName("dvsys_refkinds_cardkinds_fk_sdid");
 
 			entityBuilder.HasIndex(x => new { x.Name, x.ParentTreeRowID, x.ParentRowID })

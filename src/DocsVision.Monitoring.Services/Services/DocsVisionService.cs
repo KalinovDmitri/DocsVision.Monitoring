@@ -24,27 +24,26 @@ namespace DocsVision.Monitoring.Services
 		public async Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, TimeSpan creationSpan)
 		{
 			var creationSeconds = (int)creationSpan.TotalSeconds;
-			var nowTime = DateTime.Now;
 
-			var documentsQuery = from doc in _docsvisionContext.Set<Document>().AsNoTracking()
-								 join dates in _docsvisionContext.Set<BaseCardDates>().AsNoTracking() on doc.Id equals dates.Id
-								 join system in _docsvisionContext.Set<DocumentSystemInfo>().AsNoTracking() on doc.Id equals system.InstanceID
-								 where
-									system.Kind == kindID
-									&& EF.Functions.DateDiffSecond(dates.CreationDateTime, nowTime) <= creationSeconds
-								 select doc;
-
+			var documentsQuery = _docsvisionContext.Set<Document>().AsNoTracking()
+				.Include(x => x.Dates)
+				.Include(x => x.MainInfo)
+				.Include(x => x.System)
+				.Where(x =>
+					x.System.Kind == kindID
+					&& EF.Functions.DateDiffSecond(x.Dates.CreationDateTime, DateTime.Now) <= creationSeconds);
+			
 			var shortcutsQuery = _docsvisionContext.Set<Shortcut>().AsNoTracking();
 
 			var resultQuery = from doc in documentsQuery
-							  where !shortcutsQuery.Any(x => doc.Id == x.CardID && x.ParentRowID == folderID)
+							  where !shortcutsQuery.Any(x => doc.InstanceID == x.CardID && x.ParentRowID == folderID)
 							  select new CardFolderModel
 							  {
-								  CardID = doc.Id,
+								  CardID = doc.InstanceID,
+								  Name = doc.MainInfo.Name,
 								  Description = doc.Description,
 								  FolderID = folderID
 							  };
-
 
 			var documentsWithoutShortcuts = await resultQuery.ToListAsync();
 			return documentsWithoutShortcuts;
