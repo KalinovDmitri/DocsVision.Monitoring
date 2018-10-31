@@ -8,17 +8,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 {
 	public abstract class BaseEntityMapper<TKey, TEntity> : IEntityMapper where TKey : struct where TEntity : BaseEntity<TKey>
 	{
-		protected readonly string _primaryKeyColumnName;
-
-		protected internal BaseEntityMapper(string primaryKeyColumnName = "Id")
-		{
-			if (string.IsNullOrEmpty(primaryKeyColumnName))
-			{
-				throw new ArgumentNullException(nameof(primaryKeyColumnName), "Primary key column name cannot be null or empty.");
-			}
-
-			_primaryKeyColumnName = primaryKeyColumnName;
-		}
+		protected internal BaseEntityMapper() { }
 
 		public virtual void Map(ModelBuilder modelBuilder)
 		{
@@ -27,16 +17,15 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.ToTable(MakeTableName(), "dbo");
 
 			MapPrimaryKey(entityBuilder);
-
-			entityBuilder.Property(x => x.Id)
-				.HasColumnName(_primaryKeyColumnName)
-				.IsRequired();
-
+			
 			MapEntity(entityBuilder);
 		}
 
 		protected virtual void MapPrimaryKey(EntityTypeBuilder<TEntity> entityBuilder)
 		{
+			entityBuilder.Property(x => x.Id)
+				.IsRequired();
+
 			entityBuilder.HasKey(x => x.Id)
 				.HasName(MakePrimaryKeyName())
 				.ForSqlServerIsClustered(false);
@@ -48,7 +37,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 
 		protected virtual string MakePrimaryKeyName()
 		{
-			string keyName = string.Concat(MakeTableName(), "_pk_", _primaryKeyColumnName);
+			string keyName = string.Concat(MakeTableName(), "_pk_id");
 
 			string loweredKeyName = keyName.ToLowerInvariant();
 			return loweredKeyName;

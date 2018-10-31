@@ -10,7 +10,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	{
 		protected readonly string _tableName;
 
-		public DirectTableEntityMapper(string tableName, string primaryKeyColumnName = "Id") : base(primaryKeyColumnName)
+		public DirectTableEntityMapper(string tableName) : base()
 		{
 			if (string.IsNullOrEmpty(tableName))
 			{

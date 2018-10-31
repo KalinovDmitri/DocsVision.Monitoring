@@ -9,6 +9,7 @@ namespace DocsVision.Monitoring.DataModel.Framework
 	{
 		public static IEnumerable<IEntityMapper> GetMappers()
 		{
+			yield return new EventLogMapper();
 			yield return new KindFolderLinkMapper();
 			yield break;
 		}

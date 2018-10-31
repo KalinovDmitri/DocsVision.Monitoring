@@ -148,39 +148,39 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.ParentUnit)
 				.WithMany(x => x.Employees)
 				.HasForeignKey(x => x.ParentRowID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.RowID)
 				.HasConstraintName("dvsys_refstaff_employees_fk_parentrowid");
 
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.ID)
 				.HasConstraintName("dvsys_refstaff_employees_fk_sdid");
 
 			entityBuilder.HasOne(x => x.EmployeePosition)
 				.WithMany()
 				.HasForeignKey(x => x.Position)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.EmployeeManager)
 				.WithMany()
 				.HasForeignKey(x => x.Manager)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.EmployeePersonalFolder)
 				.WithMany()
 				.HasForeignKey(x => x.PersonalFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.EmployeeActiveEmployee)
 				.WithMany()
 				.HasForeignKey(x => x.ActiveEmployee)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.EmployeeDelegateFolder)
 				.WithMany()
 				.HasForeignKey(x => x.DelegateFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasIndex(x => x.ParentRowID)
 				.ForSqlServerIsClustered(true)

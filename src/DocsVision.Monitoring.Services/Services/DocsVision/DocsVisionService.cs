@@ -22,7 +22,7 @@ namespace DocsVision.Monitoring.Services
 				.Where(x => x.AccountName.ToUpper() == accountName.ToUpper())
 				.Select(x => new
 				{
-					UserID = x.Id,
+					x.UserID,
 					x.SID
 				})
 				.FirstOrDefaultAsync();
@@ -33,7 +33,7 @@ namespace DocsVision.Monitoring.Services
 					.Where(x => x.SysAccountName == accountName.ToLower())
 					.Select(x => new
 					{
-						EmployeeID = x.Id,
+						EmployeeID = x.RowID,
 						x.SysAccountName,
 						x.DisplayString,
 						x.AccountSID

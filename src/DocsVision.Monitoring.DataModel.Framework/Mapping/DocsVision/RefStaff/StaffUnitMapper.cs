@@ -11,14 +11,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	public sealed class StaffUnitMapper : BaseCardSectionRowMapper<StaffUnit>
 	{
 		public StaffUnitMapper() : base(RefStaff.Units.ID) { }
-
-		protected override void MapPrimaryKey(EntityTypeBuilder<StaffUnit> entityBuilder)
-		{
-			entityBuilder.HasKey(x => x.Id)
-				.ForSqlServerIsClustered(false)
-				.HasName("dvsys_refstaff_units_pk_rowid");
-		}
-
+		
 		protected override void MapEntity(EntityTypeBuilder<StaffUnit> entityBuilder)
 		{
 			base.MapEntity(entityBuilder);
@@ -141,63 +134,63 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.Security)
 				.WithMany()
 				.HasForeignKey(x => x.SDID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.ID)
 				.HasConstraintName("dvsys_refstaff_units_fk_sdid");
 
 			entityBuilder.HasOne(x => x.ParentUnit)
 				.WithMany(x => x.ChildUnits)
 				.HasForeignKey(x => x.ParentTreeRowID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasMany(x => x.ChildUnits)
 				.WithOne()
 				.HasForeignKey(x => x.ParentTreeRowID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasMany(x => x.Employees)
 				.WithOne(x => x.ParentUnit)
 				.HasForeignKey(x => x.ParentRowID)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitManager)
 				.WithMany()
 				.HasForeignKey(x => x.Manager)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitContactPerson)
 				.WithMany()
 				.HasForeignKey(x => x.ContactPerson)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitRootFolder)
 				.WithMany()
 				.HasForeignKey(x => x.RootFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitTaskFolder)
 				.WithMany()
 				.HasForeignKey(x => x.TaskFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitIncomingFolder)
 				.WithMany()
 				.HasForeignKey(x => x.IncomingFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitOutgoingFolder)
 				.WithMany()
 				.HasForeignKey(x => x.OutgoingFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitResolutionFolder)
 				.WithMany()
 				.HasForeignKey(x => x.ResolutionFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.UnitTemplateFolder)
 				.WithMany()
 				.HasForeignKey(x => x.TemplateFolder)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasIndex(x => x.ParentTreeRowID)
 				.ForSqlServerIsClustered(true)

@@ -5,14 +5,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DocsVision.Monitoring.DataModel.Mapping
 {
-	public sealed class SecurityInfoMapper : DirectTableEntityMapper<Guid, SecurityInfo>
+	public sealed class SecurityInfoMapper : DocsVisionDirectEntityMapper<SecurityInfo>
 	{
-		public SecurityInfoMapper() : base("dvsys_security", "ID") { }
+		public SecurityInfoMapper() : base("dvsys_security") { }
+
+		protected override void MapPrimaryKey(EntityTypeBuilder<SecurityInfo> entityBuilder)
+		{
+			entityBuilder.Property(x => x.ID)
+				.IsRequired()
+				.HasDefaultValueSql(DocsVisionMappingConstants.NewSequentialID)
+				.ValueGeneratedOnAdd();
+
+			entityBuilder.HasKey(x => x.ID)
+				.ForSqlServerIsClustered(false)
+				.HasName("dvsys_security_pk_id");
+		}
 
 		protected override void MapEntity(EntityTypeBuilder<SecurityInfo> entityBuilder)
 		{
-			base.MapEntity(entityBuilder);
-
 			entityBuilder.Property(x => x.Hash);
 
 			entityBuilder.Property(x => x.SecurityDesc)

@@ -59,12 +59,12 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.DocumentAuthor)
 				.WithMany()
 				.HasForeignKey(x => x.Author)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasOne(x => x.DocumentRegistrar)
 				.WithMany()
 				.HasForeignKey(x => x.Registrar)
-				.HasPrincipalKey(x => x.Id);
+				.HasPrincipalKey(x => x.RowID);
 
 			entityBuilder.HasIndex(x => x.InstanceID)
 				.ForSqlServerIsClustered(false)

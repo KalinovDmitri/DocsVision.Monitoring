@@ -19,11 +19,38 @@ namespace DocsVision.Monitoring.DataModel.Framework.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DocsVision.Monitoring.DataModel.EventLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DATETIME")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<long?>("EventId");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .IsUnicode(false);
+
+                    b.Property<string>("Message")
+                        .IsUnicode(true);
+
+                    b.HasKey("Id")
+                        .HasName("eventlogs_pk_id")
+                        .HasAnnotation("SqlServer:Clustered", false);
+
+                    b.ToTable("EventLogs","dbo");
+                });
+
             modelBuilder.Entity("DocsVision.Monitoring.DataModel.KindFolderLink", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("CreatedAt")

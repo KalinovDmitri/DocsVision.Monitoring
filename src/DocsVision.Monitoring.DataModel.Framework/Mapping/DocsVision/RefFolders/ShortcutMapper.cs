@@ -31,7 +31,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.HasOne(x => x.ParentFolder)
 				.WithMany()
 				.HasForeignKey(x => x.ParentRowID)
-				.HasPrincipalKey(x => x.Id)
+				.HasPrincipalKey(x => x.RowID)
 				.HasConstraintName("dvsys_folderscard_shortcuts_fk_parentrowid");
 
 			entityBuilder.HasIndex(x => x.ParentRowID)
