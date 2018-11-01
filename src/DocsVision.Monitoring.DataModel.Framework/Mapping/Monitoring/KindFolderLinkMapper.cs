@@ -16,27 +16,37 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			entityBuilder.Property(x => x.KindID)
 				.IsRequired();
 
+			entityBuilder.Property(x => x.KindName)
+				.IsUnicode(true)
+				.HasMaxLength(256)
+				.IsRequired();
+
 			entityBuilder.Property(x => x.KindFullName)
 				.IsUnicode(true)
-				.HasMaxLength(1024);
+				.HasMaxLength(2048);
 
 			entityBuilder.Property(x => x.FolderID)
 				.IsRequired();
 
+			entityBuilder.Property(x => x.FolderName)
+				.IsUnicode(true)
+				.HasMaxLength(256)
+				.IsRequired();
+
 			entityBuilder.Property(x => x.FolderFullName)
 				.IsUnicode(true)
-				.HasMaxLength(1024);
+				.HasMaxLength(2048);
 
 			entityBuilder.Property(x => x.IsActive)
 				.HasDefaultValueSql("1")
 				.ValueGeneratedOnAdd();
 
 			entityBuilder.Property(x => x.CreatedAt)
-				.HasDefaultValueSql("GETDATE()")
+				.HasDefaultValueSql(DocsVisionMappingConstants.DateTimeDefaultValue)
 				.ValueGeneratedOnAdd();
 
 			entityBuilder.Property(x => x.UpdatedAt)
-				.HasDefaultValueSql("GETDATE()")
+				.HasDefaultValueSql(DocsVisionMappingConstants.DateTimeDefaultValue)
 				.ValueGeneratedOnUpdate();
 		}
 	}
