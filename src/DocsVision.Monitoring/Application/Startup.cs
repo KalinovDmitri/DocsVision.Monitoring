@@ -55,7 +55,8 @@ namespace DocsVision.Monitoring
 			services
 				.AddOptions()
 				.Configure<ActiveDirectoryOptions>(_configuration.GetSection("ActiveDirectory"))
-				.Configure<SmtpOptions>(_configuration.GetSection("Smtp"));
+				.Configure<SmtpOptions>(_configuration.GetSection("Smtp"))
+				.Configure<UrlBuilderOptions>(_configuration.GetSection("UrlBuilder"));
 
 			services
 				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
@@ -64,7 +65,9 @@ namespace DocsVision.Monitoring
 				.AddDbContext<MonitoringDbContext>(ConfigureMonitoringContext, optionsLifetime: ServiceLifetime.Singleton);
 
 			services
-				.AddScoped<IConfigurationService, ConfigurationService>()
+				.AddSingleton<IReportBuilderService, ReportBuilderService>()
+				.AddSingleton<IUrlBuilderService, UrlBuilderService>()
+				.AddScoped<IMonitoringService, MonitoringService>()
 				.AddScoped<IDocsVisionService, DocsVisionService>()
 				.AddScoped<IEmailService, MailKitEmailService>()
 				.AddScoped<IDocsVisionMonitoringService, DocsVisionMonitoringService>();

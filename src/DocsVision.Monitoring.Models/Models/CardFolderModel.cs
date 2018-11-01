@@ -2,13 +2,15 @@
 
 namespace DocsVision.Monitoring.Models
 {
-	public class CardFolderModel
+	public class DocumentFolderModel
 	{
-		public Guid CardID { get; set; }
+		public Guid DocumentID { get; set; }
 
 		public string Name { get; set; }
 
 		public string Description { get; set; }
+
+		public Guid KindID { get; set; }
 
 		public Guid FolderID { get; set; }
 	}

@@ -29,8 +29,6 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 			var documentSystemInfoQuery = _context.Set<DocumentSystemInfo>();
 
 			var documentsQuery = _context.Set<Document>()
-				.Include(x => x.MainInfo)
-				.Include(x => x.System)
 				.Where(x => x.System != null)
 				.OrderByDescending(x => x.Dates.CreationDateTime)
 				.Select(x => new
@@ -38,6 +36,8 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 					x.InstanceID,
 					x.Description,
 					x.SDID,
+					CreationDate = x.Dates.CreationDateTime,
+					UpdateDate = x.Dates.ChangeDateTime,
 					SystemInfo = (x.System != null) ? new
 					{
 						KindID = x.System.Kind,

@@ -58,7 +58,37 @@ namespace DocsVision.Monitoring.Services
 			return null;
 		}
 
-		public async Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, DateTime startTime)
+		public async Task<List<DocumentFolderModel>> GetDocumentsWithoutShortcutsAsync(List<KindFolderLinkModel> kindFolderLinks, DateTime startTime)
+		{
+			if (kindFolderLinks == null)
+			{
+				throw new ArgumentNullException(nameof(kindFolderLinks), "Collection of kind-folder links cannot be null.");
+			}
+			if (kindFolderLinks.Count == 0)
+			{
+				return new List<DocumentFolderModel>();
+			}
+
+			var documentTasks = new Task<List<DocumentFolderModel>>[kindFolderLinks.Count];
+
+			for (int idx = 0; idx < kindFolderLinks.Count; ++idx)
+			{
+				var current = kindFolderLinks[idx];
+
+				documentTasks[idx] = GetDocumentsWithoutShortcutsAsync(current.KindID, current.FolderID, startTime);
+			}
+
+			var documentsWithoutShortcuts = await Task.WhenAll(documentTasks);
+
+			var foundedDocuments = documentsWithoutShortcuts
+				.Where(x => x.Count > 0)
+				.SelectMany(x => x)
+				.ToList();
+
+			return foundedDocuments;
+		}
+
+		public async Task<List<DocumentFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, DateTime startTime)
 		{
 			var documentsQuery = _docsvisionContext.Set<Document>().AsNoTracking()
 				.Where(x =>
@@ -69,11 +99,12 @@ namespace DocsVision.Monitoring.Services
 
 			var resultQuery = from doc in documentsQuery
 							  where !shortcutsQuery.Any(x => doc.InstanceID == x.CardID && x.ParentRowID == folderID)
-							  select new CardFolderModel
+							  select new DocumentFolderModel
 							  {
-								  CardID = doc.InstanceID,
+								  DocumentID = doc.InstanceID,
 								  Name = doc.MainInfo.Name,
 								  Description = doc.Description,
+								  KindID = kindID,
 								  FolderID = folderID
 							  };
 

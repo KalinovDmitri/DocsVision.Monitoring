@@ -18,7 +18,7 @@ namespace DocsVision.Monitoring.DataModel
 
 		public string TargetFolderName { get; set; }
 
-		public virtual Report ParentReport { get; set; }
+		public virtual DocumentsWithoutShortcutsReport ParentReport { get; set; }
 
 		public virtual KindFolderLink Link { get; set; }
 	}

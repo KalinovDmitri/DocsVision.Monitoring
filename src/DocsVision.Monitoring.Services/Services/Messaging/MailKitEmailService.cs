@@ -16,28 +16,47 @@ namespace DocsVision.Monitoring.Services
 	{
 		private readonly SmtpOptions _smtpOptions;
 
-		private SmtpClient _client;
+		private InternetAddress _senderAddress;
+		private SmtpClient _smtpClient;
 
 		public MailKitEmailService(IOptions<SmtpOptions> smtpOptions)
 		{
 			_smtpOptions = smtpOptions.Value;
 
-			_client = new SmtpClient();
+			_senderAddress = MailboxAddress.Parse(_smtpOptions.Sender);
+			_smtpClient = new SmtpClient();
 		}
 
 		public async Task SendAsync(MimeMessage message, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			await _client.ConnectAsync(_smtpOptions.HostName, _smtpOptions.Port, cancellationToken: cancellationToken)
-						 .ConfigureAwait(false);
+			if (message == null)
+			{
+				throw new ArgumentNullException(nameof(message), "Mail message cannot be null.");
+			}
 
-			await _client.AuthenticateAsync(_smtpOptions.UserName, _smtpOptions.Password, cancellationToken)
-						 .ConfigureAwait(false);
+			if (message.From.Count == 0)
+				message.From.Add(_senderAddress);
 
-			await _client.SendAsync(message, cancellationToken)
-						 .ConfigureAwait(false);
+			if (!_smtpClient.IsConnected)
+			{
+				await _smtpClient.ConnectAsync(_smtpOptions.HostName, _smtpOptions.Port, cancellationToken: cancellationToken)
+								 .ConfigureAwait(false);
+			}
 
-			await _client.DisconnectAsync(true, cancellationToken)
-						 .ConfigureAwait(false);
+			if (!_smtpClient.IsAuthenticated)
+			{
+				await _smtpClient.AuthenticateAsync(_smtpOptions.UserName, _smtpOptions.Password, cancellationToken)
+								 .ConfigureAwait(false);
+			}
+			
+			await _smtpClient.SendAsync(message, cancellationToken)
+							 .ConfigureAwait(false);
+		}
+
+		void IDisposable.Dispose()
+		{
+			_smtpClient.Disconnect(true);
+			_smtpClient.Dispose();
 		}
 	}
 }

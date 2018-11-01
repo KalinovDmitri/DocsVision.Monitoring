@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Options;
@@ -9,8 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using MimeKit;
-using MailKit;
-using MailKit.Net.Smtp;
+using MimeKit.Text;
 
 using DocsVision.Monitoring.Options;
 
@@ -22,21 +22,16 @@ namespace DocsVision.Monitoring.Services.Tests
 		#region Test methods
 
 		[TestMethod]
-		public async Task IsEmailMessageSendingExecutesSuccessfully()
+		[ExpectedException(typeof(MailKit.Security.AuthenticationException))]
+		public async Task IsSmtpClientThrowsAuthenticationExceptionOnInvalidUsernameOrPassword()
 		{
-			var bodyBuilder = new BodyBuilder
-			{
-				TextBody = "This is test message that sended using MailKit"
-			};
-
 			var message = new MimeMessage
 			{
-				Subject = "Test message",
-				Body = bodyBuilder.ToMessageBody()
+				Subject = "§§§ Ooops! something went wrong! §§§",
+				Body = new TextPart(TextFormat.Text)
 			};
-
-			message.From.Add(InternetAddress.Parse("kadmvl@yandex.ru"));
-			message.To.Add(InternetAddress.Parse("kadmvl@yandex.ru"));
+			
+			message.To.Add(InternetAddress.Parse("kokoko@kudah.com"));
 
 			await _emailService.SendAsync(message);
 		}
@@ -51,8 +46,9 @@ namespace DocsVision.Monitoring.Services.Tests
 			{
 				HostName = "smtp.yandex.ru",
 				Port = 465,
-				UserName = "kadmvl",
-				Password = "*****"
+				UserName = "ololo",
+				Password = "*****",
+				Sender = "ololo@trololo.com"
 			};
 
 			var wrapper = new OptionsWrapper<SmtpOptions>(options);

@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="ReportTemplates.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReportTemplates.resx</DependentUpon>
+    </Compile>
     <Compile Update="ResponseMessages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -13,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="ReportTemplates.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReportTemplates.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="ResponseMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResponseMessages.Designer.cs</LastGenOutput>

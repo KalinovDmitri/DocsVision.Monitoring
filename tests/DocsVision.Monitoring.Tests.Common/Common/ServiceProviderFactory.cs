@@ -39,7 +39,7 @@ namespace DocsVision.Monitoring.Tests.Common
 				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
 
 			services
-				.AddScoped<IConfigurationService, ConfigurationService>()
+				.AddScoped<IMonitoringService, MonitoringService>()
 				.AddScoped<IDocsVisionService, DocsVisionService>()
 				.AddScoped<IDocsVisionMonitoringService, DocsVisionMonitoringService>();
 
