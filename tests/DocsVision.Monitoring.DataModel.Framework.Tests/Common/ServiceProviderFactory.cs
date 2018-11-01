@@ -43,10 +43,10 @@ namespace DocsVision.Monitoring.DataModel.Framework.Tests
 		{
 			loggingBuilder
 				.AddProvider(new ConsoleLoggerProvider(FilterLogLevel, true))
-				.SetMinimumLevel(LogLevel.Trace);
+				.SetMinimumLevel(LogLevel.Information);
 		}
 
-		private static bool FilterLogLevel(string category, LogLevel level) => true;
+		private static bool FilterLogLevel(string category, LogLevel level) => level >= LogLevel.Information;
 		
 		private static void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
 		{

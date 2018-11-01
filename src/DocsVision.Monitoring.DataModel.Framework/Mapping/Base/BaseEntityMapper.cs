@@ -13,9 +13,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 		public virtual void Map(ModelBuilder modelBuilder)
 		{
 			var entityBuilder = modelBuilder.Entity<TEntity>();
-
-			entityBuilder.ToTable(MakeTableName(), "dbo");
-
+			
 			MapPrimaryKey(entityBuilder);
 			
 			MapEntity(entityBuilder);
@@ -27,20 +25,12 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 				.IsRequired();
 
 			entityBuilder.HasKey(x => x.Id)
-				.HasName(MakePrimaryKeyName())
-				.ForSqlServerIsClustered(false);
+				.ForSqlServerIsClustered(false)
+				.HasName(MakePrimaryKeyName());
 		}
 
 		protected virtual void MapEntity(EntityTypeBuilder<TEntity> entityBuilder) { }
 
-		protected abstract string MakeTableName();
-
-		protected virtual string MakePrimaryKeyName()
-		{
-			string keyName = string.Concat(MakeTableName(), "_pk_id");
-
-			string loweredKeyName = keyName.ToLowerInvariant();
-			return loweredKeyName;
-		}
+		protected abstract string MakePrimaryKeyName();
 	}
 }

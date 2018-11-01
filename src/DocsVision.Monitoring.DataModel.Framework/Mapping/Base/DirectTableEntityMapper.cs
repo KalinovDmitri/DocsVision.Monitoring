@@ -10,7 +10,7 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 	{
 		protected readonly string _tableName;
 
-		public DirectTableEntityMapper(string tableName) : base()
+		protected internal DirectTableEntityMapper(string tableName) : base()
 		{
 			if (string.IsNullOrEmpty(tableName))
 			{
@@ -20,6 +20,19 @@ namespace DocsVision.Monitoring.DataModel.Mapping
 			_tableName = tableName;
 		}
 
-		protected override sealed string MakeTableName() => _tableName;
+		protected override string MakePrimaryKeyName()
+		{
+			string keyName = string.Concat(_tableName, "_pk_id");
+
+			string loweredKeyName = keyName.ToLowerInvariant();
+			return loweredKeyName;
+		}
+
+		protected override void MapEntity(EntityTypeBuilder<TEntity> entityBuilder)
+		{
+			base.MapEntity(entityBuilder);
+
+			entityBuilder.ToTable(_tableName, "dbo");
+		}
 	}
 }

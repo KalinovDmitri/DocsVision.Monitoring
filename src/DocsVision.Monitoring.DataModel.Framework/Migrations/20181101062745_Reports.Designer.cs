@@ -4,14 +4,16 @@ using DocsVision.Monitoring.DataModel.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DocsVision.Monitoring.DataModel.Framework.Migrations
 {
     [DbContext(typeof(MonitoringDbContext))]
-    partial class MonitoringDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181101062745_Reports")]
+    partial class Reports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace DocsVision.Monitoring.DataModel.Framework.Migrations
 
                     b.HasKey("Id")
                         .HasName("eventlogs_pk_id")
-                        .HasAnnotation("SqlServer:Clustered", false);
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.ToTable("EventLogs","dbo");
                 });

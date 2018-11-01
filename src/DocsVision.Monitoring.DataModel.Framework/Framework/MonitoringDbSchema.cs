@@ -11,6 +11,9 @@ namespace DocsVision.Monitoring.DataModel.Framework
 		{
 			yield return new EventLogMapper();
 			yield return new KindFolderLinkMapper();
+			yield return new ReportMapper();
+			yield return new DocumentsWithoutShortcutsReportMapper();
+			yield return new DocumentsWithoutShortcutsReportRowMapper();
 			yield break;
 		}
 	}
