@@ -54,7 +54,8 @@ namespace DocsVision.Monitoring
 		{
 			services
 				.AddOptions()
-				.Configure<ActiveDirectoryOptions>(_configuration.GetSection("ActiveDirectory"));
+				.Configure<ActiveDirectoryOptions>(_configuration.GetSection("ActiveDirectory"))
+				.Configure<SmtpOptions>(_configuration.GetSection("Smtp"));
 
 			services
 				.AddDbContext<DocsVisionDbContext>(ConfigureDocsVisionContext, optionsLifetime: ServiceLifetime.Singleton);
@@ -65,6 +66,7 @@ namespace DocsVision.Monitoring
 			services
 				.AddScoped<IConfigurationService, ConfigurationService>()
 				.AddScoped<IDocsVisionService, DocsVisionService>()
+				.AddScoped<IEmailService, MailKitEmailService>()
 				.AddScoped<IDocsVisionMonitoringService, DocsVisionMonitoringService>();
 
 			services
@@ -162,26 +164,22 @@ namespace DocsVision.Monitoring
 
 		private void ConfigureDocsVisionContext(DbContextOptionsBuilder optionsBuilder)
 		{
-			var connectionString = _configuration.GetConnectionString("DocsVision");
-
-			optionsBuilder.UseSqlServer(connectionString, builder =>
-			{
-				builder
-					.CommandTimeout(60)
-					.UseRelationalNulls();
-			});
+			ConfigureDbContext(optionsBuilder, _configuration.GetConnectionString("DocsVision"));
 		}
 
 		private void ConfigureMonitoringContext(DbContextOptionsBuilder optionsBuilder)
 		{
-			var connectionString = _configuration.GetConnectionString("System");
+			ConfigureDbContext(optionsBuilder, _configuration.GetConnectionString("System"));
+		}
 
-			optionsBuilder.UseSqlServer(connectionString, builder =>
-			{
-				builder
-					.CommandTimeout(60)
-					.UseRelationalNulls();
-			});
+		private void ConfigureDbContext(DbContextOptionsBuilder optionsBuilder, string connectionString)
+		{
+			optionsBuilder.UseSqlServer(connectionString, ConfigureSqlServerOptions);
+		}
+
+		private void ConfigureSqlServerOptions(SqlServerDbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.CommandTimeout(60).UseRelationalNulls();
 		}
 
 		private void MigrateDatabase(IServiceProvider services)

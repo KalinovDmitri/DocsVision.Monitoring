@@ -25,9 +25,9 @@ namespace DocsVision.Monitoring.Services.Tests
 			var kindId = Guid.Parse("C341B0B3-5ED4-4EBE-837F-932A8502921C");
 			var folderId = Guid.NewGuid();
 
-			var creationSpan = TimeSpan.FromMinutes(5.0);
+			var startTime = DateTime.Now.AddMinutes(-5.0);
 
-			var documentsWithoutShortcuts = await _docsvisionService.GetDocumentsWithoutShortcutsAsync(kindId, folderId, creationSpan);
+			var documentsWithoutShortcuts = await _docsvisionService.GetDocumentsWithoutShortcutsAsync(kindId, folderId, startTime);
 
 			Assert.IsNotNull(documentsWithoutShortcuts);
 			Assert.IsTrue(documentsWithoutShortcuts.Count >= 0);

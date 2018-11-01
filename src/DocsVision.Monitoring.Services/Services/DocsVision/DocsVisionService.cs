@@ -58,17 +58,12 @@ namespace DocsVision.Monitoring.Services
 			return null;
 		}
 
-		public async Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, TimeSpan creationSpan)
+		public async Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, DateTime startTime)
 		{
-			var creationSeconds = (int)creationSpan.TotalSeconds;
-
 			var documentsQuery = _docsvisionContext.Set<Document>().AsNoTracking()
-				.Include(x => x.Dates)
-				.Include(x => x.MainInfo)
-				.Include(x => x.System)
 				.Where(x =>
 					x.System.Kind == kindID
-					&& EF.Functions.DateDiffSecond(x.Dates.CreationDateTime, DateTime.Now) <= creationSeconds);
+					&& x.Dates.CreationDateTime >= startTime);
 
 			var shortcutsQuery = _docsvisionContext.Set<Shortcut>().AsNoTracking();
 

@@ -10,6 +10,6 @@ namespace DocsVision.Monitoring.Services
 	{
 		Task<EmployeeModel> GetEmployeeAsync(string accountName);
 
-		Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, TimeSpan creationSpan);
+		Task<List<CardFolderModel>> GetDocumentsWithoutShortcutsAsync(Guid kindID, Guid folderID, DateTime startTime);
 	}
 }

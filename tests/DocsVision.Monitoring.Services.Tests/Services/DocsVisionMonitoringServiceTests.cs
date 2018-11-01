@@ -48,7 +48,7 @@ namespace DocsVision.Monitoring.Services.Tests
 					}
 				});
 
-			_docsvisionService.GetDocumentsWithoutShortcutsAsync(Arg.Any<Guid>(), Arg.Any<Guid>(), Arg.Any<TimeSpan>())
+			_docsvisionService.GetDocumentsWithoutShortcutsAsync(Arg.Any<Guid>(), Arg.Any<Guid>(), Arg.Any<DateTime>())
 				.Returns(new List<CardFolderModel>());
 
 			await _docsvisionMonitoringService.ProcessDocumentsWithoutShortcutsAsync();
@@ -66,8 +66,12 @@ namespace DocsVision.Monitoring.Services.Tests
 		{
 			_configurationService = Substitute.For<IConfigurationService>();
 			_docsvisionService = Substitute.For<IDocsVisionService>();
+			
+			var emailService = Substitute.For<IEmailService>();
 
-			_docsvisionMonitoringService = new DocsVisionMonitoringService(_configurationService, _docsvisionService);
+			_docsvisionMonitoringService = new DocsVisionMonitoringService(_configurationService,
+				_docsvisionService,
+				emailService);
 		}
 
 		[TestCleanup]

@@ -25,10 +25,13 @@ namespace DocsVision.Monitoring.Services
 			var kindFolderLinksQuery = _monitoringContext
 				.Set<KindFolderLink>().AsNoTracking()
 				.Where(x => x.IsActive)
+				.OrderBy(x => x.CreatedAt)
 				.Select(x => new KindFolderLinkModel
 				{
 					KindID = x.KindID,
-					FolderID = x.FolderID
+					KindFullName = x.KindFullName,
+					FolderID = x.FolderID,
+					FolderFullName = x.FolderFullName
 				});
 
 			var kindFolderLinks = await kindFolderLinksQuery.ToListAsync();

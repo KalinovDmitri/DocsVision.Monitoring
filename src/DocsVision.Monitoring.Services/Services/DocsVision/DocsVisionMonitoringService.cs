@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using DocsVision.Monitoring.Models;
@@ -11,11 +12,16 @@ namespace DocsVision.Monitoring.Services
 	{
 		private IConfigurationService _configurationService;
 		private IDocsVisionService _docsvisionService;
+		private IEmailService _emailService;
 
-		public DocsVisionMonitoringService(IConfigurationService configurationService, IDocsVisionService docsvisionService)
+		public DocsVisionMonitoringService(
+			IConfigurationService configurationService,
+			IDocsVisionService docsvisionService,
+			IEmailService emailService)
 		{
 			_configurationService = configurationService;
 			_docsvisionService = docsvisionService;
+			_emailService = emailService;
 		}
 
 		public async Task ProcessDocumentsWithoutShortcutsAsync()
@@ -24,25 +30,24 @@ namespace DocsVision.Monitoring.Services
 			if (kindFolderLinks.Count == 0)
 				return;
 
-			var creationSpan = TimeSpan.FromMinutes(5.0);
+			var startTime = DateTime.Now.AddMinutes(-5.0);
 
 			var documentTasks = new Task<List<CardFolderModel>>[kindFolderLinks.Count];
+
 			for (int idx = 0; idx < kindFolderLinks.Count; ++idx)
 			{
 				var current = kindFolderLinks[idx];
-				documentTasks[idx] = _docsvisionService.GetDocumentsWithoutShortcutsAsync(current.KindID, current.FolderID, creationSpan);
+
+				documentTasks[idx] = _docsvisionService.GetDocumentsWithoutShortcutsAsync(current.KindID, current.FolderID, startTime);
 			}
 
 			var documentsWithoutShortcuts = await Task.WhenAll(documentTasks);
 
-			await ProcessDocumentsAsync(documentsWithoutShortcuts);
+			var filteredDocuments = documentsWithoutShortcuts.Where(x => x.Count > 0).ToList();
+			if (filteredDocuments.Count == 0)
+				return;
 		}
-
-		private async Task ProcessDocumentsAsync(List<CardFolderModel>[] documentsWithoutShortcuts)
-		{
-			await Task.Yield();
-		}
-
+		
 		void IDisposable.Dispose()
 		{
 			_docsvisionService?.Dispose();
